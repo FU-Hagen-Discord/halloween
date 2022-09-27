@@ -50,7 +50,19 @@
         "next": "doors",
         "courage_min": 5,
         "courage_max": 7
-      }
+      },
+      {
+        "text": "Während ihr weitergeht hört ihr es in euren Süßigkeiten rascheln. Als ihr nachschaut schaut euch eine Spinne aus großen Augen an. \nVor Schreck lasst ihr die Süßigkeiten fallen.",
+        "next": "doors",
+        "sweets_min": -10,
+        "sweets_max": -5
+      },
+      {
+        "text": "Beim weitergehen stellt ihr fest, dass euer Süßigkeiten Behälter ein Loch hat. Als ihr zurückschaut stellt ihr fets, dass einige Kinder hinter euch herlaufen und eure Süßigkeiten einsammeln.",
+        "next": "doors",
+        "sweets_min": -15,
+        "sweets_max": -8
+      },
     ],
     "doors": [
       {
