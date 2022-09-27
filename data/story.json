@@ -308,13 +308,13 @@
         "view": "knock"
       },
       {
-        "text": "Die Tür wird geöffnet und ihr seid von einer Horde Kindern umringt. Plötzlich bemerkt ihr, dass die Kinder sich an euren Süßigkeiten Behältern zu schaffen machen. Die meisten Versuche euch süßes zu stehlen könnt ihr abwenden, aber nicht alle. Ihr rächt euch indem ihr nun eurerseits versucht die Eimer der Kinder zu plündern, aber die Eltern der Kids passen auf.",
+        "text": "Die Tür wird geöffnet und ihr seid von einer Horde Kinder umringt. Plötzlich bemerkt ihr, dass die Kinder sich an euren Süßigkeiten Behältern zu schaffen machen. Die meisten Versuche euch süßes zu stehlen könnt ihr abwenden, aber nicht alle. Ihr rächt euch indem ihr nun eurerseits versucht die Eimer der Kinder zu plündern, aber die Eltern der Kids passen auf.",
         "sweets_min": -15,
         "sweets_max": 15,
         "view": "knock"
       },
       {
-        "text": "Ein Mann macht die Tür auf und schaut überrascht auf euren Kostümen. \nHinter ihm ertönt eine genervte Stimme: \"Siehst du? Ich hatte es gesagt: wir hätten Halloweenszeug besorgen sollen!!\". \nEr reicht euch verlegen eine Tüte Haslbonbons.",
+        "text": "Ein Mann macht die Tür auf und schaut überrascht auf eure Kostüme. \nHinter ihm ertönt eine genervte Stimme: \"Siehst du? Ich hatte es gesagt: wir hätten Halloweenszeug besorgen sollen!!\". \nEr reicht euch verlegen eine Tüte Halsbonbons.",
         "courage_min": 1,
         "courage_max": 3,
         "sweets_min": 5,
