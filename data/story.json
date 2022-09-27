@@ -154,7 +154,7 @@
         "view": "door"
       },
       {
-        "text": "Die beleuchtete Klingelschilder des Wohnhauses flackern in der Nacht. \nAus einem offenen Fenster im zweiten Stockwerk hört ihr ein Kind singen.",
+        "text": "Die beleuchteten Klingelschilder des Wohnhauses flackern in der Nacht. \nAus einem offenen Fenster im zweiten Stockwerk hört ihr ein Kind singen.",
         "view": "door"
       },
       {
@@ -175,6 +175,18 @@
       },
       {
         "text": "Neben der Eingangstür des Hauses stehen drei Bienenstöcke. Trotz der frischen Temperaturen sind viele Bienen unterwegs. \nOb ihr gestochen werdet, wenn ihr näher kommt?",
+        "view": "door"
+      },
+      {
+        "text": "Die nächste Tür versteckt sich im halbdunkel einer alten Eiche. Soweit ihr erkennen könnt ist der obere Teil der Tür mit einer wundersamen Schnitzerei verziert.",
+        "view": "door"
+      },
+      {
+        "text": "Schon von weitem könnt ihr die nächste Tür sehen, zwei leuchtend blau gestrichene Türflügel. Der obere Teil der Tür besteht aus Glas, welches mit verschnörkeltem Metall verziert ist.",
+        "view": "door"
+      },
+      {
+        "text": "Die nächste Tür die ihr anvisiert versteckt sich hinter einem hohen Schmiedeeisernem Tor mit spitzen Stacheln.",
         "view": "door"
       }
     ],
@@ -316,7 +328,7 @@
         "view": "knock"
       },
       {
-        "text": "Es öffnet eine Frau mit einem breiten Grinsen und lädt euch herein. \n Hinter ihr könnt ihr aber nur Dunkelheit und nichts süßes erkennen. Dass sie insistiert, macht euch stutzig und ihr lehnt freundlich aber bestimmt ab. \nSie wird wütend und ihre Augen färben sich rot. \nIhr rennt um euer Leben.",
+        "text": "Es öffnet eine Frau mit einem breiten Grinsen und lädt euch herein. \n Hinter ihr könnt ihr aber nur Dunkelheit und nichts Süßes erkennen. Dass sie insistiert, macht euch stutzig und ihr lehnt freundlich aber bestimmt ab. \nSie wird wütend und ihre Augen färben sich rot. \nIhr rennt um euer Leben.",
         "courage_min": 11,
         "courage_max": 17,
         "view": "knock"
@@ -328,8 +340,14 @@
         "view": "knock"
       },
       {
-        "text": "Ist das ein zwei Meter großer Küken, der euch die Tür aufmacht? \nHaben Küken wirklich so große Zähne?!",
+        "text": "Ist das ein zwei Meter großes Küken, das euch die Tür aufmacht? \nHaben Küken wirklich so große Zähne?!",
         "courage_min": 12,
+        "courage_max": 20,
+        "view": "knock"
+      },
+      {
+        "text": "Auf euer Klopfen öffnet sich nicht etwa die Tür, sondern der obere Teil der Tür verändert sich. \nVoller Grauen seht ihr euch dem Gesicht eines jungen Mädchens gegenüber, welches aus dem Material der Tür geformt ist.\nAls es mit dunkler, erdiger Stimme fragt:\"Was ist euer Begehr?\" ist es um euch geschehen, ihr nehmt die Beine in die Hand und flüchtet.",
+        "courage_min": 15,
         "courage_max": 20,
         "view": "knock"
       }
@@ -344,7 +362,7 @@
         "view": "fear"
       },
       {
-        "text": "Es war ein ereignisvoller Abend! \nIhr teilt die Süßigkeiten auf und geht wieder nach Hause. Jetzt ist Erholung, Tee und Süßigkeiten naschen angesagt!",
+        "text": "Es war ein ereignisvoller Abend! \nIhr teilt die Süßigkeiten auf und geht wieder nach Hause. Jetzt sind Erholung, Tee und Süßigkeiten naschen angesagt!",
         "view": "fear"
       }
     ]
