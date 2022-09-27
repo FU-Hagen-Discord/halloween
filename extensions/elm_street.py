@@ -651,7 +651,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
             if sweets == 0:
                 text += f"\n\nIhr habt genau so viele Süßigkeiten wie vorher."
             if sweets < 0:
-                text += f"\n\nDie Anzahl eurer Süßigkeiten ändert sich um {sweets}."
+                text += f"\n\nIhr verliert jeweils {-sweets} Süßigkeiten."
             group_stats['sweets'] += sweets
         if courage:
             if courage > 0:
