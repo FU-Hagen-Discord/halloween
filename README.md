@@ -1,7 +1,13 @@
 # Discord Halloween Adventure
 
-## Setup
+## Inhaltsverzeichnis
+1. [Setup](#setup)
+   1. [Setup des Discord Servers](#setup-des-discord-servers)
+   2. [Erstellen des Bot Accounts](#erstellen-des-bot-accounts)
+   3. [Setup des Bots](#setup-des-bots)
+2. [Aufbau der story.json](#aufbau-der-storyjson)
 
+## Setup
 ### Setup des Discord Servers
 1. Um den Bot nutzen zu können benötigst du zunächst einen Discord-Server. Klicke dazu in Discord in der Serverliste auf folgenden Button:\
 ![](https://nextcloud.dnns01.dev/index.php/s/JAaA2xQ7LGLn7yC/download/add_server.png)\
@@ -57,3 +63,72 @@ Es erscheint daraufhin ein Dialog über den ein neuer Discord Server erstellt we
    ![](https://nextcloud.dnns01.dev/index.php/s/ADb4bWXbbGxxYEL/download/edit_config_3.png)
    4. Klicke auf Ok und erneut auf Ok. Anschließens solltest du über den Play Button von PyCharm den Bot starten können.
    5. Sobald der Bot gestartet ist, sollte er kurz darauf in Discord als Online auftauchen. 
+
+## Aufbau der story.json
+
+Beispiel story.json: 
+
+```json
+{
+  "events": {
+    "continue": [
+      {
+        "text": "Ihr geht weiter zur nächsten Tür.",
+        "next": "doors"
+      }
+    ],
+    "skip": [
+      {
+        "text": "Ihr seit euch nicht sicher, was ihr von der Tür halten sollt und lauft weiter.",
+        "next": "doors",
+        "courage_min": 5,
+        "courage_max": 7
+      }
+    ],
+    "doors": [
+      {
+        "text": "Ihr seht eine alte Heuschupfe auf einem Feld stehen. \nZwischen den Balken leuchtet der unstete Schein eines offenen Feuers hindurch. \nNach dem Motto: \"Wer nicht wagt, der nicht gewinnt\", macht ihr euch auf den Weg. \nDas höfliche Klopfen an der Tür entfällt, da es keine Tür gibt. \nIhr werft einen Blick ins Innere und euch gefriert das Blut in den Adern. \nAuf dem Boden um ein kleines Feuer sitzen große haarige Gestallten mit riesigen Hörnern und grotesk verzogenen Gesichtern. \nIhr nehmt die Beine in die Hand und rennt los, bloß weg von diesem Ort.",
+        "courage_min": 19,
+        "courage_max": 21,
+        "next": "doors"
+      }
+    ],
+    "knock_on_door": [
+      {
+        "text": "Die Haustür wird von einem Schrank von einem Mann geöffnet. \nEuer \"Süßes oder Saures\" bleibt euch im Hals stecken, als ihr euer Gegenüber genauer anschaut. Er stützt sich auf eine Axt und sein Hemd hat feuchte rote Flecken. \nEuch verlässt der Mut und ihr lauft weiter, nicht ohne noch schnell in die Schüssel mit Süßigkeiten neben der Tür gegriffen zu haben.",
+        "sweets_min": 7,
+        "sweets_max": 15,
+        "courage_min": 9,
+        "courage_max": 16,
+        "view": "knock"
+      }
+    ],
+    "fear": [
+      {
+        "text": "Ihr lasst eure Blicke über die Körper euer Gruppenmitglieder schweifen. Als eure Blicke an den Beinen ankommen und ihr das Schlottern seht merkt Ihr, wie eure Beine nachgeben und Ihr zu boden sinkt. Das Sammeln von Süßigkeiten ist wohl erstmal vorüber.",
+        "view": "fear"
+      }
+    ]
+  },
+  "views": {
+    "door": [
+      {
+        "label": "Anklopfen",
+        "custom_id": "elm_street:knock",
+        "value": "knock_on_door"
+      },
+      {
+        "label": "Weitergehen",
+        "custom_id": "elm_street:next",
+        "value": "skip"
+      }
+    ]
+  }
+}
+```
+
+Wie man an der Beispiel story.json erkennen kann, besteht diese aus zwei Hauptbereichen, den `events` und den `views`. 
+
+Views sind Buttons, die unter einer Nachricht angezeigt werden können. In diesem Beispiel haben wir einen Ausschnitt der View `doors`. Eine View besteht dann aus einem Array von Objects, dass jeweils die Attribute `label`, `custom_id` und `value` enthält. Das Label ist der Text, der auf dem Button angezeigt wird, die custom_id muss eine eindeutige ID sein, die beispielsweise jeder "Anklopfen" Button einer `door` View hat. Zum Schluss gibt es noch den Value. Dabei handelt es sich um das Event, dass ausgelöst wird, wenn dieser Button gedrückt wird.
+
+Die Events sind hierbei schon deutlich komplexer. Events bestehen aus einem Array von Objects. Beim Auslösen des Events wird zufällig eines aus dem Array ausgewählt und verarbeitet. Das Object eines Events enthält immer einen `text`, welcher in den jeweiligen Discord Thread gesendet wird. Es kann dann entweder ein `next` oder eine `view` enthalten. Beinhaltet es ein `next` wird anschließend dieses Event ausgeführt. Wir sehen das im obigen Beispiel am `continue` Event. Hier wird in den Chat der Text "Ihr geht weiter zur nächsten Tür" geschrieben und anschließend das Event `doors` ausgeführt. Ist stattdessen eine `view` angegeben, wie beispielsweise beim Event `doors`, so wird die referenzierte View unter der Nachricht angezeigt und der Bot wartet darauf, dass ein Button gedrückt wird. Zusätzlich dazu kann über `courage_min` und `courage_max`, sowie `sweets_min` und `sweets_max` festgelegt werden, wieviele Süßigkeiten gewonnen, bzw. Mut verloren werden kann. Im angegebenen Bereich wird dann ein zufälliger Wert ausgewürfelt. Bei den Süßigkeiten können auch negative Werte verwendet werden, um die Spieler Süßigkeiten verlieren zu lassen (beispielsweise im Falle, dass die Spieler sich erschrecken und wegrennen).   
