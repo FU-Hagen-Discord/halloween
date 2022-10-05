@@ -193,7 +193,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
             f"in diesem Thread statt. Sobald deine Gruppe sich zusammen gefunden hat, kannst "
             f"du über einen Klick auf den Start Button eure Reise starten.\n\n"
             f"Für das volle Gruselerlebnis könnt ihr euch während des Abenteuers gegenseitig ",
-            #f"Schauermärchen in eurem Voice Channel {voice_channel.mention} erzählen.",
+            f"Schauermärchen in eurem Voice Channel {voice_channel.mention} erzählen.",
             view=self.get_start_view())
 
         await interaction.response.send_message(self.get_invite_message(author),
@@ -468,7 +468,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
 
     def get_start_view(self, disabled=False):
         buttons = [
-            {"label": "Start", "style": ButtonStyle.green, "value": True, "custom_id": "elm_street:start",
+            {"label": "Los geht's", "style": ButtonStyle.green, "value": True, "custom_id": "elm_street:start",
              "disabled": disabled},
             {"label": "Abbrechen", "style": ButtonStyle.gray, "value": False, "custom_id": "elm_street:cancel",
              "disabled": disabled}
