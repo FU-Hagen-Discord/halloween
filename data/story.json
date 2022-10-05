@@ -178,7 +178,7 @@
         "view": "door"
       },
       {
-        "text": "Die nächste Tür versteckt sich im halbdunkel einer alten Eiche. Soweit ihr erkennen könnt ist der obere Teil der Tür mit einer wundersamen Schnitzerei verziert.",
+        "text": "Die nächste Tür versteckt sich im Halbdunkel einer alten Eiche. Soweit ihr erkennen könnt ist der obere Teil der Tür mit einer wundersamen Schnitzerei verziert.",
         "view": "door"
       },
       {
@@ -186,7 +186,7 @@
         "view": "door"
       },
       {
-        "text": "Die nächste Tür die ihr anvisiert versteckt sich hinter einem hohen Schmiedeeisernem Tor mit spitzen Stacheln.",
+        "text": "Die nächste Tür die ihr anvisiert versteckt sich hinter einem hohen Schmiedeeisernen Tor mit spitzen Stacheln.",
         "view": "door"
       }
     ],
@@ -328,7 +328,7 @@
         "view": "knock"
       },
       {
-        "text": "Es öffnet eine Frau mit einem breiten Grinsen und lädt euch herein. \n Hinter ihr könnt ihr aber nur Dunkelheit und nichts Süßes erkennen. Dass sie insistiert, macht euch stutzig und ihr lehnt freundlich aber bestimmt ab. \nSie wird wütend und ihre Augen färben sich rot. \nIhr rennt um euer Leben.",
+        "text": "Es öffnet eine Frau mit einem breiten Grinsen und lädt euch herein. \nHinter ihr könnt ihr aber nur Dunkelheit und nichts Süßes erkennen. Dass sie insistiert, macht euch stutzig und ihr lehnt freundlich aber bestimmt ab. \nSie wird wütend und ihre Augen färben sich rot. \nIhr rennt um euer Leben.",
         "courage_min": 11,
         "courage_max": 17,
         "view": "knock"
