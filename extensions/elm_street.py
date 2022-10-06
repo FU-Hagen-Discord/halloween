@@ -180,7 +180,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
 
         if player["courage"] < 50:
             await interaction.response.send_message(
-                "Du fühlst dich derzeit noch nicht mutig genug, um aus Süßigkeitenjagd zu gehen. Warte, bis deine Mutpunkte wieder mindestens 50 betragen. Den aktuellen Stand deiner Mutpunkte kannst du über /stats prüfen.",
+                "Du fühlst dich derzeit noch nicht mutig genug, um auf Süßigkeitenjagd zu gehen. Warte, bis deine Mutpunkte wieder mindestens 50 betragen. Den aktuellen Stand deiner Mutpunkte kannst du über /stats prüfen.",
                 ephemeral=True)
             return
 
@@ -233,7 +233,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
                                     self.save()
                                 else:
                                     await interaction.response.send_message(
-                                        "Du fühlst dich derzeit noch nicht mutig genug, um aus Süßigkeitenjagd zu gehen. Warte, bis deine Mutpunkte wieder mindestens 50 betragen. Den aktuellen Stand deiner Mutpunkte kannst du über /stats prüfen.",
+                                        "Du fühlst dich derzeit noch nicht mutig genug, um auf Süßigkeitenjagd zu gehen. Warte, bis deine Mutpunkte wieder mindestens 50 betragen. Den aktuellen Stand deiner Mutpunkte kannst du über /stats prüfen.",
                                         ephemeral=True)
                             else:
                                 await interaction.response.send_message(
@@ -651,7 +651,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
             if sweets == 0:
                 text += f"\n\nIhr habt genau so viele Süßigkeiten wie vorher."
             if sweets < 0:
-                text += f"\n\nIhr verliert jeweils {sweets} Süßigkeiten."
+                text += f"\n\nIhr verliert jeweils {-sweets} Süßigkeiten."
             group_stats['sweets'] += sweets
         if courage:
             if courage > 0:
