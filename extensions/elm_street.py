@@ -192,7 +192,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
             f"Hallo {author.mention}. Der Streifzug deiner Gruppe durch die Elm-Street findet "
             f"in diesem Thread statt. Sobald deine Gruppe sich zusammen gefunden hat, kannst "
             f"du über einen Klick auf den Start Button eure Reise starten.\n\n"
-            f"Für das volle Gruselerlebnis könnt ihr euch während des Abenteuers gegenseitig ",
+            f"Für das volle Gruselerlebnis könnt ihr euch während des Abenteuers gegenseitig "
             f"Schauermärchen in eurem Voice Channel {voice_channel.mention} erzählen.",
             view=self.get_start_view())
 
