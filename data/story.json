@@ -40,12 +40,6 @@
         "sweets_max": 12
       },
       {
-        "text": "Ihr geht weiter.",
-        "next": "doors",
-        "courage_min": 5,
-        "courage_max": 7
-      },
-      {
         "text": "Das sah zu gruselig aus.",
         "next": "doors",
         "courage_min": 5,
