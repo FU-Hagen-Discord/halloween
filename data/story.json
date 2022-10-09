@@ -52,7 +52,7 @@
         "courage_max": 7
       },
       {
-        "text": "Während ihr weitergeht hört ihr es in euren Süßigkeiten rascheln. Als ihr nachschaut seht ihr eine große Spinne über eure Süßigkeiten krabbeln. \nBei dem Versuch die Spinne loszuwerden verliert ihr einen Teil eurer Süßigkeiten.",
+        "text": "Während ihr weitergeht hört ihr es in euren Süßigkeiten rascheln. Als ihr nachschaut seht ihr eine große Spinne über eure Süßigkeiten krabbeln. \nVor Bei dem Versuch die Spinne loszuwerden verliert ihr einen Teil eurer Süßigkeiten.",
         "next": "doors",
         "sweets_min": -10,
         "sweets_max": -5
@@ -352,7 +352,7 @@
     ],
     "fear": [
       {
-        "text": "Ihr lasst eure Blicke über die Körper euer Gruppenmitglieder schweifen. Als eure Blicke an den Beinen ankommen und ihr das Schlottern seht merkt ihr, wie eure Beine nachgeben und Ihr zu Boden sinkt. Das Sammeln von Süßigkeiten ist wohl erstmal vorüber.",
+        "text": "Ihr lasst eure Blicke über die Körper euer Gruppenmitglieder schweifen. Als eure Blicke an den Beinen ankommen und ihr das Schlottern seht merkt Ihr, wie eure Beine nachgeben und Ihr zu Boden sinkt. Das Sammeln von Süßigkeiten ist wohl erstmal vorüber.",
         "view": "fear"
       },
       {
