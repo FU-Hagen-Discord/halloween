@@ -54,12 +54,6 @@
     ],
     "doors": [
       {
-        "text": "Ihr seht eine alte Heuschupfe auf einem Feld stehen. \nZwischen den Balken leuchtet der unstete Schein eines offenen Feuers hindurch. \nNach dem Motto: \"Wer nicht wagt, der nicht gewinnt\", macht ihr euch auf den Weg. \nDas höfliche Klopfen an der Tür entfällt, da es keine Tür gibt. \nIhr werft einen Blick ins Innere und euch gefriert das Blut in den Adern. \nAuf dem Boden um ein kleines Feuer sitzen große haarige Gestallten mit riesigen Hörnern und grotesk verzogenen Gesichtern. \nIhr nehmt die Beine in die Hand und rennt los, bloß weg von diesem Ort.",
-        "courage_min": 19,
-        "courage_max": 21,
-        "next": "doors"
-      },
-      {
         "text": "Ihr seid an einer Felswand. \nPlötzlich seht ihr ein kleines Stück vor euch einen warmen Lichtschein aus der Wand kommen.\nJe näher ihr kommt desto lauter wird ein himmlischer Gesang.\nDer Gesang und das Licht scheinen direkt aus dem Fels zu kommen.\nAls ihr ganz nahe seid, seht ihr, dass ihr vor einer kleinen Kapelle steht, die direkt in den Fels geschlagen wurde.\nDas Innere der Kapelle ist leer.\nIm Weitergehen merkt ihr, dass eure Süßigkeiten Behälter schwerer geworden sind.\nWas auch immer für den Gesang verantwortlich war, geizig war es jedenfalls nicht.",
         "sweets_min": 20,
         "sweets_max": 25,
