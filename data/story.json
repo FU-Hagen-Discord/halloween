@@ -16,25 +16,25 @@
     ],
     "skip": [
       {
-        "text": "Ihr seit euch nicht sicher, was ihr von der Tür halten sollt und lauft weiter.",
+        "text": "Ihr seid euch nicht sicher, was ihr von der Tür halten sollt und lauft weiter.",
         "next": "doors",
         "courage_min": 5,
         "courage_max": 7
       },
       {
-        "text": "Ihr traut euch nicht und lauft weiter.",
+        "text": "Ihr traut euch nicht und geht eingeschüchtert weiter.",
         "next": "doors",
         "courage_min": 5,
         "courage_max": 7
       },
       {
-        "text": "Ihr geht weiter und findet am Straßenrand einen kleinen Tisch bedeckt mit orangenen Gummibärchen-Tüten.",
+        "text": "Ihr geht weiter und findet am Straßenrand einen kleinen Tisch bedeckt mit orangenen Gummibärchen-Tütchen.",
         "next": "doors",
         "sweets_min": 10,
         "sweets_max": 11
       },
       {
-        "text": "Am Wegesrand entdeckt ihr einen Busch, der wie ein Weihnachtsbaum geschmückt wurde. \nStatt Weihnachtskugeln hängen Karamellbonbons an den Ästen. \nOb es auffällt, wenn ihr ein paar mitgehen lässt?",
+        "text": "Am Wegesrand entdeckt ihr einen Busch, der wie ein Weihnachtsbaum geschmückt wurde. \nStatt Weihnachtskugeln hängen Karamellbonbons an den Ästen. \nOb es auffällt, wenn ihr ein paar mitgehen lasst?",
         "next": "doors",
         "sweets_min": 11,
         "sweets_max": 12
@@ -76,13 +76,13 @@
         "view": "door"
       },
       {
-        "text": "Durch die Glastür vor euch könnt ihr eine Bewegung erahnen. Plötzlich wird das Licht hinter der Tür eingeschalten und in der Tür spiegelt sich ein lebensgroßes Skelet.",
+        "text": "Durch die Glastür vor euch könnt ihr eine Bewegung erahnen. Plötzlich wird das Licht hinter der Tür eingeschaltet und in der Tür spiegelt sich ein lebensgroßes Skelet.",
         "courage_min": 3,
         "courage_max": 7,
         "view": "door"
       },
       {
-        "text": "Die Mauer, an der ihr lang geht hat überall lustige kleine Türmchen. Ihr erwartet also etwas ausgefallenes, wenigstens ein kleines Schloss. Als ihr am Tor ankommt seit ihr enttäuscht, ihr seht einen einfachen schnörkellosen Bungalow.",
+        "text": "Die Mauer, an der ihr lang geht hat überall lustige kleine Türmchen. Ihr erwartet also etwas ausgefallenes, wenigstens ein kleines Schloss. Als ihr am Tor ankommt seid ihr enttäuscht, ihr seht einen einfachen schnörkellosen Bungalow.",
         "view": "door"
       },
       {
@@ -94,7 +94,7 @@
         "view": "door"
       },
       {
-        "text": "Ein Einfamilienhaus. Das hier eine Familie wohnt scheint klar zu sein, Spielzeug im Garten, geschnitzte Kürbise vor der Haustür und gebastelter Fensterschmuck. Was soll schon schief gehen?",
+        "text": "Ein Einfamilienhaus. Das hier eine Familie wohnt scheint klar zu sein, Spielzeug im Garten, geschnitzte Kürbise vor der Haustür und gebastelter Fensterschmuck. Was soll kann da schon schief gehen?",
         "view": "door"
       },
       {
@@ -134,11 +134,11 @@
         "view": "door"
       },
       {
-        "text": "Ihr seid an einem Bauernhof angekommen. Um zur Haustür zu gelangen müsst ihr eine steile Holztreppe rauf.",
+        "text": "Ihr seid an einem Bauernhof angekommen. Um zur Haustür zu gelangen müsst ihr eine steile Holztreppe hinauf.",
         "view": "door"
       },
       {
-        "text": "Diese Tür sieht aus, als ob sie in einen Keller führt. Es geht ein paar Stufen runter und die Farbe der Tür blättert langsam ab. Die Lampe, die den Abgang beleuchtet hat ihre besten Tage auch schon hinter sich. Gerade als ihr runter gehen wollt gibt sie ganz den Geist auf und geht aus.",
+        "text": "Diese Tür sieht aus, als ob sie in einen Keller führt. Es geht ein paar Stufen runter und die Farbe der Tür blättert langsam ab. Die Lampe, die den Abgang beleuchtet, hat ihre besten Tage auch schon hinter sich. Gerade als ihr runter gehen wollt gibt sie endgültig den Geist auf und erlischt.",
         "view": "door"
       },
       {
@@ -192,7 +192,7 @@
     ],
     "knock_on_door": [
       {
-        "text": "Die Haustür wird von einem Schrank von einem Mann geöffnet. \nEuer \"Süßes oder Saures\" bleibt euch im Hals stecken, als ihr euer Gegenüber genauer anschaut. Er stützt sich auf eine Axt und sein Hemd hat feuchte rote Flecken. \nEuch verlässt der Mut und ihr lauft weiter, nicht ohne noch schnell in die Schüssel mit Süßigkeiten neben der Tür gegriffen zu haben.",
+        "text": "Die Haustür wird von einem großen hühnenhaften Mann geöffnet. \nEuer \"Süßes oder Saures\" bleibt euch im Hals stecken, als ihr euer Gegenüber genauer anschaut. Er stützt sich auf eine Axt und sein Hemd hat feuchte rote Flecken. \nEuch verlässt der Mut und ihr lauft weiter, nicht ohne noch schnell in die Schüssel mit Süßigkeiten neben der Tür gegriffen zu haben.",
         "sweets_min": 7,
         "sweets_max": 15,
         "courage_min": 9,
@@ -200,19 +200,19 @@
         "view": "knock"
       },
       {
-        "text": "Die Tür öffnet sich und eine Person schaut zur Tür raus. \nDa das Licht im Eingangsbereich eingeschalten ist, könnt ihr nicht viel erkennen. Dafür hört ihr umso mehr. \nLaut brüllend wird euch klar gemacht, dass ihr besser verschwindet, da sonst die Polizei gerufen wird.\nIhr macht euch aus dem Staub.",
+        "text": "Die Tür öffnet sich und eine Person schaut zur Tür raus. \nDa das Licht im Eingangsbereich eingeschaltet ist, könnt ihr nicht viel erkennen. Dafür hört ihr umso mehr. \nLautstark wird euch zu verstehen gegeben, dass ihr besser verschwindet, da sonst die Polizei gerufen werde.\nIhr macht euch aus dem Staub.",
         "courage_min": 7,
         "courage_max": 9,
         "view": "knock"
       },
       {
-        "text": "Die Tür wird von einem mürrischen alten Mann geöffnet. Er schaut euch in euren Kostümen an und fängt an loszuzetern: \"Als ich in eurem alter war gab es sowas nicht, wir...\" \nDen Rest hört ihr schon nicht mehr, da ihr bereits die nächste Tür anvisiert.",
+        "text": "Die Tür wird von einem mürrischen alten Mann geöffnet. Er schaut euch in euren Kostümen an und fängt an loszuzetern: \"Als ich in eurem Alter war gab es sowas nicht, wir...\" \nDen Rest hört ihr schon nicht mehr, da ihr bereits die nächste Tür anvisiert.",
         "courage_min": 5,
         "courage_max": 8,
         "view": "knock"
       },
       {
-        "text": "Die Türglocke gibt ein schauriges Wimmern von sich. Bei dem Geräuch läuft euch ein Schauer den Rücken runter. \nEin kleines Mädchen öffnet freudestrahlend die Tür und hält euch einen großen Eimer Süßes hin. Leicht verstört greift ihr zu und geht.",
+        "text": "Die Türglocke gibt ein schauriges Wimmern von sich. Bei dem Geräusch läuft euch ein Schauer den Rücken runter. \nEin kleines Mädchen öffnet freudestrahlend die Tür und hält euch einen großen Eimer Süßes hin. Leicht verstört greift ihr zu und geht.",
         "sweets_min": 6,
         "sweets_max": 10,
         "courage_min": 2,
@@ -220,13 +220,13 @@
         "view": "knock"
       },
       {
-        "text": "Auf euer Klingeln öffnet eine verhutzelte Alte und strahlt euch an. \n\"So liebe Kinderchen kommen eine alte Frau am Abend besuchen\", murmelt sie vor sich hin. \nDie Kekse, die sie euch anbietet, schauen genau so alt aus, wie sie selbst.",
+        "text": "Auf euer Klingeln öffnet eine verhutzelte Alte und strahlt euch an. \n\"So liebe Kinderchen kommen eine alte Frau am Abend besuchen\", murmelt sie vor sich hin. \nDie Kekse, die sie euch anbietet, schauen genau so alt aus, wie sie.",
         "sweets_min": 7,
         "sweets_max": 15,
         "view": "knock"
       },
       {
-        "text": "Ein junger Mann öffnet die Tür und hält euch eine Schale mit Süßem hin.",
+        "text": "Ein junger Mann öffnet die Tür und hält euch eine Schale mit bunten Süßigkeiten hin.",
         "sweets_min": 7,
         "sweets_max": 14,
         "view": "knock"
@@ -240,13 +240,13 @@
         "view": "knock"
       },
       {
-        "text": "Die Haustür schwingt auf und offenbart den Blick in eine reich gefüllte Süßigkeiten Kiste.",
+        "text": "Die Haustür schwingt auf und offenbart euren Blick in eine reich gefüllte Kiste mit Süßigkeiten.",
         "sweets_min": 5,
         "sweets_max": 10,
         "view": "knock"
       },
       {
-        "text": "Traut ihr euch? Die Kiste vor euch ist voll mit Süßkram, aber oben drauf sitze eine dicke Spinne. Augen zu und durch.",
+        "text": "Traut ihr euch? Die Kiste vor euch ist voll mit Süßkram, aber oben drauf sitze eine große haarige Spinne. Augen zu und durch.",
         "sweets_min": 9,
         "sweets_max": 12,
         "courage_min": 4,
@@ -260,7 +260,7 @@
         "view": "knock"
       },
       {
-        "text": "Ein Mann schaut euch aus verquollenen Augen an. Er brabbelt etwas von Montagen, Monstern und schlechtem Stoff. \nPlötzlich scheint er euch wahrzunehmen und kreischt los. Er verdreht die Augen und kippt um. \nAls er am Boden sitzt kommt er wieder zu sich und krabbelt immer noch kreischend aus eurem Sichtfeld.",
+        "text": "Ein Mann schaut euch aus verquollenen Augen an. Er brabbelt etwas von Montagen, Monstern und schlechtem Stoff. \nPlötzlich scheint er euch wahrzunehmen und kreischt los. Er verdreht die Augen und kippt um. \nAuf dem Boden sitztend kommt er wieder zu sich und krabbelt immer noch kreischend aus eurem Sichtfeld.",
         "courage_min": 3,
         "courage_max": 5,
         "view": "knock"
@@ -302,13 +302,13 @@
         "view": "knock"
       },
       {
-        "text": "Die Tür öffnet sich und ihr seid von einer Horde gruseliger Gestalten umgeben, die Kostüme sehen so echt aus, dass ihr nicht sicher seid ob sich wirklich Menschen unter den Masken befinden. \nIhr kehrt schnell um.",
+        "text": "Die Tür öffnet sich und ihr seid von einer Horde gruseliger Gestalten umgeben, die Kostüme sehen so echt aus, dass ihr nicht sicher seid ob sich wirklich Menschen unter den Masken befinden. \nSchnell kehrt ihr um.",
         "courage_min": 9,
         "courage_max": 13,
         "view": "knock"
       },
       {
-        "text": "Die Tür wird geöffnet und ihr seid von einer Horde Kinder umringt. Plötzlich bemerkt ihr, dass die Kinder sich an euren Süßigkeiten Behältern zu schaffen machen. Die meisten Versuche euch süßes zu stehlen könnt ihr abwenden, aber nicht alle. Ihr rächt euch indem ihr nun eurerseits versucht die Eimer der Kinder zu plündern, aber die Eltern der Kids passen auf.",
+        "text": "Die Tür wird geöffnet und ihr seid von einer Horde Kinder umringt. Plötzlich bemerkt ihr, dass die Kinder sich an euren Süßigkeiten zu schaffen machen. Die meisten Versuche euch Süßes zu stehlen könnt ihr abwenden, aber nicht alle. Ihr rächt euch indem ihr nun eurerseits versucht die Eimer der Kinder zu plündern, aber die Eltern der Kids passen auf.",
         "sweets_min": -15,
         "sweets_max": 15,
         "view": "knock"
@@ -322,7 +322,7 @@
         "view": "knock"
       },
       {
-        "text": "Jackpot! Ihr seid auf dem best vorbereiteten alten Mann der Nachbarschaft gestoßen! \nDer Hobby-Bäcker hat nicht nur den nächsten Supermarktsortiment geplündert, sondern auch jede Menge leckere Motto-Kekse gebacken. ",
+        "text": "Jackpot! Ihr seid auf dem best vorbereiteten alten Mann der Nachbarschaft gestoßen! \nDer Hobby-Bäcker hat nicht nur das nächste Supermarktsortiment geplündert, sondern auch jede Menge leckere Motto-Kekse gebacken. ",
         "sweets_min": 25,
         "sweets_max": 30,
         "view": "knock"
@@ -334,7 +334,7 @@
         "view": "knock"
       },
       {
-        "text": "Die Tür geht auf und ihr seht zwei verkleidete Kinder, die mit euch im Einklang \"Süßes oder Saures!\" piepsen. Der kleine Geist und der Mini-Wissenschaftler reichen euch mehrere Schokoriegeln.",
+        "text": "Die Tür geht auf und ihr seht zwei verkleidete Kinder, die mit euch im Einklang \"Süßes oder Saures!\" piepsen. Der kleine Geist und der Mini-Wissenschaftler reichen euch mehrere Schokoriegel.",
         "sweets_min": 6,
         "sweets_max": 8,
         "view": "knock"
@@ -354,11 +354,11 @@
     ],
     "fear": [
       {
-        "text": "Ihr lasst eure Blicke über die Körper euer Gruppenmitglieder schweifen. Als eure Blicke an den Beinen ankommen und ihr das Schlottern seht merkt Ihr, wie eure Beine nachgeben und Ihr zu boden sinkt. Das Sammeln von Süßigkeiten ist wohl erstmal vorüber.",
+        "text": "Ihr lasst eure Blicke über die Körper eurer Gruppenmitglieder schweifen. Als eure Blicke an den Beinen ankommen und ihr das Schlottern seht merkt Ihr, wie eure Beine nachgeben und Ihr zu boden sinkt. Das Sammeln von Süßigkeiten ist wohl erstmal vorüber.",
         "view": "fear"
       },
       {
-        "text": "Langsam wird es heller über den Horizont. \nMüde aber reicher an Süßigkeiten (und Erfahrung) macht ihr euch auf dem Weg nach Hause.",
+        "text": "Langsam wird es heller über dem Horizont. \nMüde aber reicher an Süßigkeiten (und Erfahrung) macht ihr euch auf dem Weg nach Hause.",
         "view": "fear"
       },
       {
