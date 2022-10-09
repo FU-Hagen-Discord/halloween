@@ -52,7 +52,7 @@
         "courage_max": 7
       },
       {
-        "text": "Während ihr weitergeht hört ihr es in euren Süßigkeiten rascheln. Als ihr nachschaut seht ihr eine Große Spinne über eure Süßigkeiten krabbeln. \nVor Bei dem Versuch die Spinne loszuwerden verliert ihr einen Teil eurer Süßigkeiten.",
+        "text": "Während ihr weitergeht hört ihr es in euren Süßigkeiten rascheln. Als ihr nachschaut seht ihr eine große Spinne über eure Süßigkeiten krabbeln. \nBei dem Versuch die Spinne loszuwerden verliert ihr einen Teil eurer Süßigkeiten.",
         "next": "doors",
         "sweets_min": -10,
         "sweets_max": -5
@@ -62,11 +62,11 @@
         "next": "doors",
         "sweets_min": -15,
         "sweets_max": -8
-      },
+      }
     ],
     "doors": [
       {
-        "text": "Ihr seht eine alte Heuschupfe auf einem Feld stehen. \nZwischen den Balken leuchtet der unstete Schein eines offenen Feuers hindurch. \nNach dem Motto: \"Wer nicht wagt, der nicht gewinnt\", macht ihr euch auf den Weg. \nDas höfliche Klopfen an der Tür entfällt, da es keine Tür gibt. \nIhr werft einen Blick ins Innere und euch gefriert das Blut in den Adern. \nAuf dem Boden um ein kleines Feuer sitzen große haarige Gestallten mit riesigen Hörnern und grotesk verzogenen Gesichtern. \nIhr nehmt die Beine in die Hand und rennt los, bloß weg von diesem Ort.",
+        "text": "Ihr seht eine alte Scheune auf einem Feld stehen. \nZwischen den Balken leuchtet der unstete Schein eines offenen Feuers hindurch. \nNach dem Motto: \"Wer nicht wagt, der nicht gewinnt\", macht ihr euch auf den Weg. \nDas höfliche Klopfen an der Tür entfällt, da es keine Tür gibt. \nIhr werft einen Blick ins Innere und euch gefriert das Blut in den Adern. \nAuf dem Boden um ein kleines Feuer sitzen große haarige Gestallten mit riesigen Hörnern und grotesk verzogenen Gesichtern. \nIhr nehmt die Beine in die Hand und rennt los, bloß weg von diesem Ort.",
         "courage_min": 19,
         "courage_max": 21,
         "next": "doors"
@@ -88,7 +88,7 @@
         "view": "door"
       },
       {
-        "text": "Durch die Glastür vor euch könnt ihr eine Bewegung erahnen. Plötzlich wird das Licht hinter der Tür eingeschalten und in der Tür spiegelt sich ein lebensgroßes Skelet.",
+        "text": "Durch das Glas in der Tür vor euch könnt ihr eine Bewegung erahnen. Plötzlich wird das Licht hinter der Tür eingeschalten und in der Tür spiegelt sich ein lebensgroßes Skelet.",
         "courage_min": 3,
         "courage_max": 7,
         "view": "door"
@@ -170,7 +170,7 @@
         "view": "door"
       },
       {
-        "text": "Ihr habt euch mutig für einen Spaziergang durch den Wald entschieden und habt jetzt schon länger keine Häuser - oder Lichter - gesehen. \nDer Weg wird immer schmaler. \nPlötzlich steht ihr in einer Lichtung. In der Mitte steht ein Fachwerkhaus, dessen Mäuer und Dach eine ungewöhnliche Textur haben. \nKönnte es... Pfefferkuchen sein?",
+        "text": "Ihr habt euch mutig für einen Spaziergang durch den Wald entschieden und habt jetzt schon länger keine Häuser - oder Lichter - gesehen. \nDer Weg wird immer schmaler. \nPlötzlich steht ihr in einer Lichtung. In der Mitte steht ein Fachwerkhaus, dessen Mauer und Dach eine ungewöhnliche Textur haben. \nKönnte es... Pfefferkuchen sein?",
         "view": "door"
       },
       {
@@ -183,6 +183,10 @@
       },
       {
         "text": "Ihr entscheidet euch, zum letzten Haus der Sackgasse zu gehen. \nDichte Hecken versperren die Sicht auf dem Haus, ihr geht also durch das halb offene Tor und wagt euch in dem Vorgarten.",
+        "view": "door"
+      },
+      {
+        "text": "Hinter einem hohen Holzzaun könnt ihr ein völlig überwuchertes Haus erkennen.",
         "view": "door"
       },
       {
@@ -212,7 +216,7 @@
         "view": "knock"
       },
       {
-        "text": "Die Türglocke gibt ein schauriges Wimmern von sich. Bei dem Geräuch läuft euch ein Schauer den Rücken runter. \nEin kleines Mädchen öffnet freudestrahlend die Tür und hält euch einen großen Eimer Süßes hin. Leicht verstört greift ihr zu und geht.",
+        "text": "Die Türglocke gibt ein schauriges Wimmern von sich. Bei dem Geräusch läuft euch ein Schauer den Rücken runter. \nEin kleines Mädchen öffnet freudestrahlend die Tür und hält euch einen großen Eimer Süßes hin. Leicht verstört greift ihr zu und geht.",
         "sweets_min": 6,
         "sweets_max": 10,
         "courage_min": 2,
@@ -328,7 +332,7 @@
         "view": "knock"
       },
       {
-        "text": "Es öffnet eine Frau mit einem breiten Grinsen und lädt euch herein. \n Hinter ihr könnt ihr aber nur Dunkelheit und nichts süßes erkennen. Dass sie insistiert, macht euch stutzig und ihr lehnt freundlich aber bestimmt ab. \nSie wird wütend und ihre Augen färben sich rot. \nIhr rennt um euer Leben.",
+        "text": "Es öffnet eine Frau mit einem breiten Grinsen und lädt euch herein. \nHinter ihr könnt ihr aber nur Dunkelheit und nichts süßes erkennen. Dass sie insistiert, macht euch stutzig und ihr lehnt freundlich aber bestimmt ab. \nSie wird wütend und ihre Augen färben sich rot. \nIhr rennt um euer Leben.",
         "courage_min": 11,
         "courage_max": 17,
         "view": "knock"
@@ -340,7 +344,7 @@
         "view": "knock"
       },
       {
-        "text": "Ist das ein zwei Meter großer Küken, der euch die Tür aufmacht? \nHaben Küken wirklich so große Zähne?!",
+        "text": "Ist das ein zwei Meter großes Küken, das euch die Tür aufmacht? \nHaben Küken wirklich so große Zähne?!",
         "courage_min": 12,
         "courage_max": 20,
         "view": "knock"
@@ -348,7 +352,7 @@
     ],
     "fear": [
       {
-        "text": "Ihr lasst eure Blicke über die Körper euer Gruppenmitglieder schweifen. Als eure Blicke an den Beinen ankommen und ihr das Schlottern seht merkt Ihr, wie eure Beine nachgeben und Ihr zu boden sinkt. Das Sammeln von Süßigkeiten ist wohl erstmal vorüber.",
+        "text": "Ihr lasst eure Blicke über die Körper euer Gruppenmitglieder schweifen. Als eure Blicke an den Beinen ankommen und ihr das Schlottern seht merkt ihr, wie eure Beine nachgeben und Ihr zu Boden sinkt. Das Sammeln von Süßigkeiten ist wohl erstmal vorüber.",
         "view": "fear"
       },
       {
