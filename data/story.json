@@ -54,12 +54,6 @@
     ],
     "doors": [
       {
-        "text": "Ihr seid an einer Felswand. \nPlötzlich seht ihr ein kleines Stück vor euch einen warmen Lichtschein aus der Wand kommen.\nJe näher ihr kommt desto lauter wird ein himmlischer Gesang.\nDer Gesang und das Licht scheinen direkt aus dem Fels zu kommen.\nAls ihr ganz nahe seid, seht ihr, dass ihr vor einer kleinen Kapelle steht, die direkt in den Fels geschlagen wurde.\nDas Innere der Kapelle ist leer.\nIm Weitergehen merkt ihr, dass eure Süßigkeiten Behälter schwerer geworden sind.\nWas auch immer für den Gesang verantwortlich war, geizig war es jedenfalls nicht.",
-        "sweets_min": 20,
-        "sweets_max": 25,
-        "next": "doors"
-      },
-      {
         "text": "An der Straßenecke steht ein geschmückter Tisch mit mehreren Schüsseln voller Süßigkeiten. \nWeit und breit ist niemand zu sehen. \nAls ihr euch wieder auf dem Weg macht, bemerkt ihr ein Schild mit der Aufschrift \"Happy Halloween :)\"",
         "sweets_min": 21,
         "sweets_max": 25,
