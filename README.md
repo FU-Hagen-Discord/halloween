@@ -6,6 +6,7 @@
    2. [Erstellen des Bot Accounts](#erstellen-des-bot-accounts)
    3. [Setup des Bots](#setup-des-bots)
 2. [Aufbau der story.json](#aufbau-der-storyjson)
+3. Hm.. naja
 
 ## Setup
 ### Setup des Discord Servers
