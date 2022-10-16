@@ -6,8 +6,7 @@ from random import SystemRandom
 from typing import Union
 
 import discord
-from discord import app_commands
-from discord import Interaction, ButtonStyle
+from discord import app_commands, Guild, Interaction, ButtonStyle
 from discord.app_commands import Choice
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
@@ -15,6 +14,12 @@ from dotenv import load_dotenv
 from utils import send_dm
 
 load_dotenv()
+
+MAX_COURAGE = 100
+MIN_COURAGE = 20
+MIN_COURAGE_JOIN = 50
+MIN_GROUP_COURAGE = 20
+INC_COURAGE_STEP = 10
 
 
 def get_player_from_embed(embed: discord.Embed):
@@ -54,12 +59,6 @@ def get_doors_visited(group):
 class ElmStreet(commands.GroupCog, name="elm"):
     def __init__(self, bot):
 
-        self.max_courage = 100
-        self.min_courage = 20
-        self.min_group_courage = 20
-
-        self.inc_courage_step = 10
-
         self.bot = bot
         self.groups = {}
         self.players = {}
@@ -73,7 +72,6 @@ class ElmStreet(commands.GroupCog, name="elm"):
         self.bot.view_manager.register("on_stop", self.on_stop)
         self.bot.view_manager.register("on_story", self.on_story)
         self.bot.view_manager.register("on_leave", self.on_leave)
-
         self.increase_courage.start()
 
     def load(self):
@@ -104,8 +102,8 @@ class ElmStreet(commands.GroupCog, name="elm"):
     @app_commands.guild_only()
     async def cmd_leaderboard(self, interaction: Interaction, show: int = 10):
         await interaction.response.defer(ephemeral=True)
-        embed = await self.leaderboard(max_entries=show)
-        await interaction.followup.send(embed=embed, ephemeral=True)
+        leaderboard = await self.get_leaderboard(interaction.guild, max_entries=show)
+        await interaction.followup.send(content=leaderboard, ephemeral=True)
 
     @app_commands.command(name="group-stats",
                           description="Zeigt die aktuelle Gruppenstatistik an.")
@@ -126,17 +124,19 @@ class ElmStreet(commands.GroupCog, name="elm"):
         thread_id = interaction.channel_id
         player_id = interaction.user.id
         if group := self.groups.get(str(thread_id)):
-            if not player_id == group['owner']:
-                if player_id in group.get('players'):
-                    self.leave_group(thread_id, player_id)
-                    await interaction.response.send_message(f"<@{player_id}> hat die Gruppe verlassen.")
-                else:
-                    await interaction.response.send_message(
-                        "Du bist garnicht Teil dieser Gruppe.", ephemeral=True)
+            if player_id == group['owner']:
+                await interaction.response.send_message(
+                    "Du darfst deine Gruppe nicht im Stich lassen. Als Gruppenleiterin kannst du die Gruppe höchstens "
+                    "auflösen, aber nicht verlassen.", ephemeral=True)
+                return
+
+            if player_id in group.get('players'):
+                self.leave_group(thread_id, player_id)
+                await interaction.response.send_message(f"<@{player_id}> hat die Gruppe verlassen.")
             else:
                 await interaction.response.send_message(
-                    "Du darfst deine Gruppe nicht im Stich lassen. Als Gruppenleiterin kannst du sie höchstens beenden, "
-                    "aber nicht verlassen.", ephemeral=True)
+                    "Du bist garnicht Teil dieser Gruppe.", ephemeral=True)
+
         else:
             await interaction.response.send_message("Dieses Kommando kann nur in einem Gruppenthread ausgeführt werden."
                                                     , ephemeral=True)
@@ -165,23 +165,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
                 ephemeral=True)
             return
 
-        if not self.can_play(player):
-            await interaction.response.send_message(
-                "Du zitterst noch zu sehr von deiner letzten Runde. Ruh dich noch ein wenig aus bevor du weiter spielst.",
-                ephemeral=True)
-            return
-
-        if self.is_playing(author.id):
-            await interaction.response.send_message(
-                "Es tut mir leid, aber du kannst nicht an mehr als einer Jagd gleichzeitig teilnehmen. "
-                "Beende erst das bisherige Abenteuer, bevor du dich einer neuen Gruppe anschließen kannst.",
-                ephemeral=True)
-            return
-
-        if player["courage"] < 50:
-            await interaction.response.send_message(
-                "Du fühlst dich derzeit noch nicht mutig genug, um aus Süßigkeitenjagd zu gehen. Warte, bis deine Mutpunkte wieder mindestens 50 betragen. Den aktuellen Stand deiner Mutpunkte kannst du über /stats prüfen.",
-                ephemeral=True)
+        if not self.can_play(player, interaction):
             return
 
         thread = await channel.create_thread(name=name, auto_archive_duration=1440, type=channel_type)
@@ -192,8 +176,8 @@ class ElmStreet(commands.GroupCog, name="elm"):
             f"Hallo {author.mention}. Der Streifzug deiner Gruppe durch die Elm-Street findet "
             f"in diesem Thread statt. Sobald deine Gruppe sich zusammen gefunden hat, kannst "
             f"du über einen Klick auf den Start Button eure Reise starten.\n\n"
-            f"Für das volle Gruselerlebnis könnt ihr euch während des Abenteuers gegenseitig ",
-            #f"Schauermärchen in eurem Voice Channel {voice_channel.mention} erzählen.",
+            f"Für das volle Gruselerlebnis könnt ihr euch während des Abenteuers gegenseitig "
+            f"Schauermärchen in eurem Voice Channel {voice_channel.mention} erzählen.",
             view=self.get_start_view())
 
         await interaction.response.send_message(self.get_invite_message(author),
@@ -206,52 +190,37 @@ class ElmStreet(commands.GroupCog, name="elm"):
                                        "voice_channel": voice_channel.id}
         self.save()
 
-
-
-
     async def on_join(self, button: discord.ui.Button, interaction: Interaction, value=None):
         player = self.get_player(interaction.user)
 
         try:
             if group := self.groups.get(str(value)):
                 requests = [r['player'] for r in group.get('requests')]
-                if interaction.user.id not in requests:
-                    if self.can_play(player):
-                        if not self.is_already_in_this_group(interaction.user.id, interaction.message.id):
-                            if not self.is_playing(interaction.user.id):
-                                if player["courage"] >= 50:
-                                    thread = await self.bot.fetch_channel(value)
-                                    msg = await self.bot.view_manager.confirm(thread, "Neuer Rekrut",
-                                                                              f"{interaction.user.mention} würde sich gerne der Gruppe anschließen.",
-                                                                              fields=[{'name': 'aktuelle Mutpunkte',
-                                                                                       'value': self.get_courage_message(
-                                                                                           player)}],
-                                                                              custom_prefix="rekrut",
-                                                                              callback_key="on_joined")
-                                    player.get('messages').append({'id': msg.id, 'channel': thread.id})
-                                    group.get('requests').append({'player': interaction.user.id, 'id': msg.id})
-                                    self.save()
-                                else:
-                                    await interaction.response.send_message(
-                                        "Du fühlst dich derzeit noch nicht mutig genug, um aus Süßigkeitenjagd zu gehen. Warte, bis deine Mutpunkte wieder mindestens 50 betragen. Den aktuellen Stand deiner Mutpunkte kannst du über /stats prüfen.",
-                                        ephemeral=True)
-                            else:
-                                await interaction.response.send_message(
-                                    "Es tut mir leid, aber du kannst nicht an mehr als einer Jagd gleichzeitig teilnehmen. "
-                                    "Beende erst das bisherige Abenteuer, bevor du dich einer neuen Gruppe anschließen kannst.",
-                                    ephemeral=True)
-                        else:
-                            await interaction.response.send_message(
-                                "Du bist schon Teil dieser Gruppe! Schau doch mal in eurem "
-                                "Thread vorbei.", ephemeral=True)
-                    else:
-                        await interaction.response.send_message(
-                            "Du zitterst noch zu sehr von deiner letzten Runde. Ruh dich noch ein wenig aus bevor du weiter spielst.",
-                            ephemeral=True)
-                else:
+                if interaction.user.id in requests:
                     await interaction.response.send_message(
                         "Für diese Gruppe hast du dich schon beworben. Warte auf eine Entscheidung des Gruppenleiters.",
                         ephemeral=True)
+                    return
+
+                if self.is_already_in_this_group(interaction.user.id, interaction.message.id):
+                    await interaction.response.send_message(
+                        "Du bist schon Teil dieser Gruppe! Schau doch mal in eurem "
+                        "Thread vorbei.", ephemeral=True)
+                    return
+
+                if not self.can_play(player, interaction):
+                    return
+
+                thread = await self.bot.fetch_channel(value)
+                msg = await self.bot.view_manager.confirm(thread, "Neuer Rekrut",
+                                                          f"{interaction.user.mention} würde sich gerne der Gruppe anschließen.",
+                                                          fields=[{'name': 'aktuelle Mutpunkte',
+                                                                   'value': f"{player.get('courage')}"}],
+                                                          custom_prefix="rekrut",
+                                                          callback_key="on_joined")
+                player.get('messages').append({'id': msg.id, 'channel': thread.id})
+                group.get('requests').append({'player': interaction.user.id, 'id': msg.id})
+                self.save()
         except Exception as e:
             await interaction.response.send_message(
                 "Ein Fehler ist aufgetreten. Überprüfe bitte, ob du der richtigen Gruppe beitreten wolltest. "
@@ -270,7 +239,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
         if interaction.user.id == owner_id:
             if group := self.groups.get(str(interaction.channel_id)):
                 if value:
-                    if not self.is_playing(player_id):
+                    if not self.is_playing(player_id, interaction, send_message=False):
                         group["players"].append(player_id)
 
                         # Request-Nachrichten aus allen Threads und aus players löschen
@@ -311,35 +280,18 @@ class ElmStreet(commands.GroupCog, name="elm"):
                 if value:  # auf Start geklickt
                     await self.deny_open_join_requests(thread_id, group)
                     random_player = await self.bot.fetch_user(SystemRandom().choice(group.get('players')))
-                    bags = ["einen Putzeimer, der", "eine Plastiktüte von Aldi, die", "einen Einhorn-Rucksack, der",
-                            "eine Reisetasche, die", "eine Wickeltasche mit zweifelhaftem Inhalt, die",
-                            "einen Rucksack, der", "eine alte Holzkiste, die", "einen Leinensack, der",
-                            "einen Müllsack, der", "einen Jutebeutel mit verwaschener gotischer Schrift, die",
-                            "eine blaue Ikea-Tasche, die"]
+                    bags = self.story["bags"]
                     await interaction.followup.send(
                         f"```\nSeid ihr bereit? Taschenlampe am Gürtel, Schminke im Gesicht? Dann kann es losgehen!\n"
-                        f"Doch als ihr gerade in euer Abenteuer starten wollt, fällt {random_player.name} auf, dass ihr euch erst noch Behälter für die erwarteten Süßigkeiten suchen müsst. \nIhr schnappt euch also {SystemRandom().choice(bags)} gerade da ist. \nNun aber los!\n```")
+                        f"Doch als ihr gerade in euer Abenteuer starten wollt, fällt {random_player.name} auf, "
+                        f"dass ihr euch erst noch Behälter für die erwarteten Süßigkeiten suchen müsst. \n"
+                        f"Ihr schnappt euch also {SystemRandom().choice(bags)} gerade da ist. \nNun aber los!\n```")
                     await self.on_story(button, interaction, "doors")
                 else:  # auf Abbrechen geklickt
-                    # voice channel löschen
-                    voice_channel_id = self.groups[str(thread_id)]["voice_channel"]
-                    voice_channel = await self.bot.fetch_channel(voice_channel_id)
-                    if len(voice_channel.members) == 0:
-                        await voice_channel.delete()
-
-                    self.groups.pop(str(thread_id))
-                    self.save()
-                    await interaction.followup.send(f"Du hast die Runde abgebrochen. Dieser Thread wurde "
-                                                            f"archiviert und du kannst in <#{self.elm_street_channel_id}>"
-                                                            f" eine neue Runde starten.", ephemeral=True)
-                    await interaction.channel.send(f"Dieses Abenteuer ist beendet und zum Nachlesen archiviert."
-                                                   f"\nFür mehr Halloween-Spaß, schau in <#{self.elm_street_channel_id}>"
-                                                   f"vorbei")
-                    await interaction.channel.edit(archived=True)
+                    await self.end_adventure(interaction, thread_id, abort=True)
         else:
             await interaction.response.send_message(
-                "Nur die Gruppenerstellerin kann die Gruppe starten lassen oder die "
-                "Tour abbrechen.",
+                "Nur die Gruppenerstellerin kann die Gruppe starten lassen oder die Tour abbrechen.",
                 ephemeral=True)
 
     async def on_stop(self, button: discord.ui.Button, interaction: Interaction, value=None):
@@ -358,24 +310,10 @@ class ElmStreet(commands.GroupCog, name="elm"):
         self.share_sweets(sweets, thread_id)
 
         # aktuelles leaderboard in elm-street posten
-        leaderboard_embed = await self.leaderboard(max_entries=0)
-        await elm_street.send("", embed=leaderboard_embed)
+        leaderboard = await self.get_leaderboard(interaction.guild, max_entries=0)
+        await elm_street.send(leaderboard)
 
-        # voice channel löschen
-        voice_channel_id = self.groups[str(thread_id)]["voice_channel"]
-        voice_channel = await self.bot.fetch_channel(voice_channel_id)
-        if len(voice_channel.members) == 0:
-            await voice_channel.delete()
-
-        # Gruppe aus json löschen
-        self.groups.pop(str(thread_id))
-        self.save()
-
-        # Thread archivieren
-        await interaction.channel.send(f"Dieses Abenteuer ist beendet und zum Nachlesen archiviert."
-                                       f"\nFür mehr Halloween-Spaß, schau in <#{self.elm_street_channel_id}>"
-                                       f"vorbei")
-        await interaction.channel.edit(archived=True)
+        await self.end_adventure(interaction, thread_id)
 
     async def on_story(self, button: discord.ui.Button, interaction: Interaction, value=None):
         thread_id = interaction.channel_id
@@ -436,6 +374,26 @@ class ElmStreet(commands.GroupCog, name="elm"):
                 f"Nur <@{player_id}> darf diesen Button bedienen. Wenn du die Gruppe "
                 f"verlassen willst, versuche es mit `/leave-group`", ephemeral=True)
 
+    async def end_adventure(self, interaction: Interaction, thread_id: int, abort: bool = False):
+        # voice channel löschen
+        voice_channel_id = self.groups[str(thread_id)]["voice_channel"]
+        voice_channel = await self.bot.fetch_channel(voice_channel_id)
+        if len(voice_channel.members) == 0:
+            await voice_channel.delete()
+
+        self.groups.pop(str(thread_id))
+        self.save()
+
+        if abort:
+            await interaction.followup.send(f"Du hast die Runde abgebrochen. Dieser Thread wurde "
+                                            f"archiviert und du kannst in <#{self.elm_street_channel_id}>"
+                                            f" eine neue Runde starten.", ephemeral=True)
+
+        await interaction.channel.send(f"Dieses Abenteuer ist beendet und zum Nachlesen archiviert."
+                                       f"\nFür mehr Halloween-Spaß, schau in <#{self.elm_street_channel_id}>"
+                                       f"vorbei")
+        await interaction.channel.edit(archived=True)
+
     def get_choice(self, key, event, group):
         if key == "doors":
             doors_visited = get_doors_visited(group)
@@ -487,11 +445,30 @@ class ElmStreet(commands.GroupCog, name="elm"):
         ]
         return self.bot.view_manager.view(buttons, "on_leave")
 
-    def is_playing(self, user_id: int = None):
-        for group in self.groups.values():
-            if players := group.get("players"):
-                if user_id in players:
-                    return True
+    def can_play(self, player, interaction):
+        if self.is_playing(interaction.user.id, interaction):
+            return False
+
+        if player["courage"] < MIN_COURAGE_JOIN:
+            await interaction.response.send_message(
+                "Du fühlst dich derzeit noch nicht mutig genug, um aus Süßigkeitenjagd zu gehen. "
+                "Warte, bis deine Mutpunkte wieder mindestens 50 betragen. "
+                "Den aktuellen Stand deiner Mutpunkte kannst du über /stats prüfen.",
+                ephemeral=True)
+            return False
+
+        return True
+
+    def is_playing(self, user_id: int, interaction: Interaction, send_message: bool = True):
+        players = [player for player in [group["players"] for group in self.groups.values()]]
+        if user_id in players:
+            if send_message:
+                await interaction.response.send_message(
+                    "Es tut mir leid, aber du kannst nicht an mehr als einer Jagd gleichzeitig teilnehmen. "
+                    "Beende erst das bisherige Abenteuer, bevor du dich einer neuen Gruppe anschließen kannst.",
+                    ephemeral=True)
+            return True
+
         return False
 
     def is_already_in_this_group(self, user_id, message_id):
@@ -514,26 +491,16 @@ class ElmStreet(commands.GroupCog, name="elm"):
             group_courage += player["courage"]
         average_courage = group_courage / num_players
 
-        return self.min_group_courage < average_courage
-
-    def can_play(self, player):
-        if player.get('courage') < self.min_courage:
-            return False
-        return True
+        return MIN_GROUP_COURAGE < average_courage
 
     def get_player(self, user: Union[discord.User, discord.Member]):
         if player := self.players.get(str(user.id)):
             return player
         else:
-            player = {"courage": self.max_courage, "sweets": 0, "messages": []}
+            player = {"courage": MAX_COURAGE, "sweets": 0, "messages": []}
             self.players[str(user.id)] = player
             self.save()
             return player
-
-    def get_courage_message(self, player):
-        courage = player.get('courage')
-        message = f"{courage}"
-        return message
 
     def delete_message_from_player(self, player_id, message_id):
         if player := self.players.get(str(player_id)):
@@ -543,20 +510,21 @@ class ElmStreet(commands.GroupCog, name="elm"):
                     messages.remove(msg)
                     self.save()
 
-    async def leaderboard(self, max_entries: int = 10, interaction: Interaction = None):
-        places = scores = "\u200b"
+    async def get_leaderboard(self, guild: Guild, max_entries: int = 10):
+        message = f"**__Elm-Street Leaderboard__**\n\n" \
+                  f"Wie süß bist du wirklich??\n" \
+                  f"{':jack_o_lantern: ' * 8}\n\n" \
+                  f"```md\n" \
+                  f"Rank. | Items | User\n" \
+                  f"==================================================\n"
+
         place = 0
 
         ready = False
-        embed = discord.Embed(title="Elm-Street Leaderboard",
-                              description="Wie süß bist du wirklich??\n" +
-                                          (":jack_o_lantern: " * 8))
         last_score = -1
         for player_id, player_data in sorted(self.players.items(), key=lambda item: item[1]["sweets"], reverse=True):
             value = player_data["sweets"]
-            # embed.set_thumbnail(
-            #     url="https://www.planet-wissen.de/kultur/religion/ostern/tempxostereiergjpg100~_v-gseagaleriexl.jpg")
-            elm_street_channel = await self.bot.fetch_channel(self.elm_street_channel_id)
+            member = await guild.fetch_member(int(player_id))
             try:
                 if last_score != value:
                     place += 1
@@ -564,20 +532,13 @@ class ElmStreet(commands.GroupCog, name="elm"):
                 if 0 < max_entries < place:
                     if ready:
                         break
-                    # elif str(ctx.author.id) != player_id:
-                    #    continue
-                places += f"{place}: <@!{player_id}>\n"
-                scores += f"{value:,}\n".replace(",", ".")
-
-                # if str(ctx.author.id) == player_id:
-                #    ready = True
+                message += f"{str(place).rjust(4)}. | {str(value).rjust(5)} | {member.display_name}#{member.discriminator}\n"
             except:
                 pass
 
-        embed.add_field(name=f"Sammlerin", value=places)
-        embed.add_field(name=f"Süßigkeiten", value=scores)
-        return embed
-        # await elm_street_channel.send("", embed=embed)
+        message += f"```"
+
+        return message
 
     async def get_group_stats_embed(self, thread_id):
         thread = await self.bot.fetch_channel(thread_id)
@@ -605,32 +566,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
         return embed
 
     def get_invite_message(self, author):
-        texts = [f"Du bist mitten in einer Großstadt gelandet.\n"
-                 f"Der leise Wind weht Papier die Straße lang. "
-                 f"Ansonsten hörst du nur in der Ferne das Geräusch vorbeifahrender Autos.\n"
-                 f"Da, was war das?\n"
-                 f"Hat sich da nicht etwas bewegt?\n"
-                 f"Ein Schatten an der Mauer?\n"
-                 f"Ein Geräusch wie von Krallen auf Asphalt.\n"
-                 f"Du drehst dich im Kreis.\n"
-                 f"Ein leises Lachen in deinem Rücken.\n"
-                 f"Und da, gerade außerhalb deines Sichtfeldes eine Tür die sich quietschend öffnet.\n"
-                 f"Eine laute Stimme ruft fragend: \"Ich zieh los um die Häuser, wäre ja gelacht wenn nur Kinder heute "
-                 f"abend Süßkram bekommen. Wer ist mit dabei?\"\n"
-                 f"Du drehst dich zur Tür und siehst {author.mention}s entschlossenen Gesichtsausdruck.",
-                 f"Eine Einladung über die Sozialen Netzwerke hat dich Aufmerksam werden lassen. \n"
-                 f"Darin war von einer großen Halloween Party die Rede, "
-                 f"als Treffpunkt war ein Park in der Innenstadt angegeben.\n"
-                 f"Schon beim eintreffen merkst du, dass es keine angemeldete Party ist: "
-                 f"überall ist Blaulicht und du siehst einige Polizeiwagen.\n"
-                 f"Du entscheidest dich die Pläne für den Abend noch mal zu überdenken. "
-                 f"Aber was tun? \n"
-                 f"Deine Verkleidung ist zu aufwendig um schon wieder nach Hause zu gehen.\n"
-                 f"In deiner Nähe stehen noch andere Menschen in Verkleidung die nicht wissen was sie mit dem angebrochenen Abend anfangen sollen. "
-                 f"Da fragt {author.mention} laut in die Runde: \"Wer hat Lust um die Häuser zu ziehen und gemeinsam Süßigkeiten zu sammeln?\""
-                 ]
-
-        return SystemRandom().choice(texts)
+        return SystemRandom().choice(self.story["invitations"]).format(author_mention=author.mention)
 
     def get_group_by_voice_id(self, voice_id):
         for group in self.groups.values():
@@ -711,18 +647,16 @@ class ElmStreet(commands.GroupCog, name="elm"):
 
     @tasks.loop(minutes=5)
     async def increase_courage(self):
-        actual_playing = []
-        for p in (self.groups.get(group).get('players') for group in self.groups):
-            actual_playing += p
+        # Alle Spieler, die gerade in einer Runde sind auslesen
+        actual_playing = [player for player in [group["players"] for group in self.groups.values()]]
+
         # pro Spieler: courage erhöhen
-        for player in self.players:
+        for player_id, player in self.players.items():
             # nur wenn Spieler nicht gerade spielt
-            if int(player) not in actual_playing:
-                player = self.players.get(player)
+            if int(player_id) not in actual_playing:
                 courage = player.get('courage')
-                if courage < self.max_courage:
-                    courage += self.inc_courage_step
-                    player['courage'] = courage if courage < self.max_courage else self.max_courage
+                if courage < MAX_COURAGE:
+                    player['courage'] = min(courage + INC_COURAGE_STEP, MAX_COURAGE)
                     self.save()
 
                     # pro Nachricht: Nachricht erneuern
@@ -732,7 +666,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
                             msg = await channel.fetch_message(message['id'])
                             embed = msg.embeds[0]
                             embed.clear_fields()
-                            embed.add_field(name='aktuelle Mutpunkte', value=self.get_courage_message(player))
+                            embed.add_field(name='aktuelle Mutpunkte', value=f"{player.get('courage')}")
                             await msg.edit(embed=embed)
 
     @increase_courage.before_loop

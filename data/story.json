@@ -1,4 +1,21 @@
 {
+  "invitations": [
+    "Du bist mitten in einer Großstadt gelandet.\nDer leise Wind weht Papier die Straße lang. Ansonsten hörst du nur in der Ferne das Geräusch vorbeifahrender Autos.\nDa, was war das?\nHat sich da nicht etwas bewegt?\nEin Schatten an der Mauer?\nEin Geräusch wie von Krallen auf Asphalt.\nDu drehst dich im Kreis.\nEin leises Lachen in deinem Rücken.\nUnd da, gerade außerhalb deines Sichtfeldes eine Tür die sich quietschend öffnet.\nEine laute Stimme ruft fragend: \"Ich zieh los um die Häuser, wäre ja gelacht wenn nur Kinder heute abend Süßkram bekommen. Wer ist mit dabei?\"\nDu drehst dich zur Tür und siehst {author_mention}s entschlossenen Gesichtsausdruck.",
+    "Eine Einladung über die Sozialen Netzwerke hat dich Aufmerksam werden lassen. \nDarin war von einer großen Halloween Party die Rede, als Treffpunkt war ein Park in der Innenstadt angegeben.\nSchon beim eintreffen merkst du, dass es keine angemeldete Party ist: überall ist Blaulicht und du siehst einige Polizeiwagen.\nDu entscheidest dich die Pläne für den Abend noch mal zu überdenken. Aber was tun? \nDeine Verkleidung ist zu aufwendig um schon wieder nach Hause zu gehen.\nIn deiner Nähe stehen noch andere Menschen in Verkleidung die nicht wissen was sie mit dem angebrochenen Abend anfangen sollen. Da fragt {author_mention} laut in die Runde: \"Wer hat Lust um die Häuser zu ziehen und gemeinsam Süßigkeiten zu sammeln?\""
+  ],
+  "bags": [
+    "einen Putzeimer, der",
+    "eine Plastiktüte von Aldi, die",
+    "einen Einhorn-Rucksack, der",
+    "eine Reisetasche, die",
+    "eine Wickeltasche mit zweifelhaftem Inhalt, die",
+    "einen Rucksack, der",
+    "eine alte Holzkiste, die",
+    "einen Leinensack, der",
+    "einen Müllsack, der",
+    "einen Jutebeutel mit verwaschener gotischer Schrift, die",
+    "eine blaue Ikea-Tasche, die"
+  ],
   "events": {
     "continue": [
       {
