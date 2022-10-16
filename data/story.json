@@ -67,11 +67,23 @@
         "next": "doors",
         "courage_min": 5,
         "courage_max": 7
+      },
+      {
+        "text": "Während ihr weitergeht hört ihr es in euren Süßigkeiten rascheln. Als ihr nachschaut seht ihr eine große Spinne über eure Süßigkeiten krabbeln. \nVor Bei dem Versuch die Spinne loszuwerden verliert ihr einen Teil eurer Süßigkeiten.",
+        "next": "doors",
+        "sweets_min": -10,
+        "sweets_max": -5
+      },
+      {
+        "text": "Beim Weitergehen stellt ihr fest, dass euer Süßigkeiten Behälter ein Loch hat. Als ihr zurückschaut seht ihr, dass einige Kinder hinter euch herlaufen und eure Süßigkeiten einsammeln.",
+        "next": "doors",
+        "sweets_min": -15,
+        "sweets_max": -8
       }
     ],
     "doors": [
       {
-        "text": "Ihr seht eine alte Heuschupfe auf einem Feld stehen. \nZwischen den Balken leuchtet der unstete Schein eines offenen Feuers hindurch. \nNach dem Motto: \"Wer nicht wagt, der nicht gewinnt\", macht ihr euch auf den Weg. \nDas höfliche Klopfen an der Tür entfällt, da es keine Tür gibt. \nIhr werft einen Blick ins Innere und euch gefriert das Blut in den Adern. \nAuf dem Boden um ein kleines Feuer sitzen große haarige Gestallten mit riesigen Hörnern und grotesk verzogenen Gesichtern. \nIhr nehmt die Beine in die Hand und rennt los, bloß weg von diesem Ort.",
+        "text": "Ihr seht eine alte Scheune auf einem Feld stehen. \nZwischen den Balken leuchtet der unstete Schein eines offenen Feuers hindurch. \nNach dem Motto: \"Wer nicht wagt, der nicht gewinnt\", macht ihr euch auf den Weg. \nDas höfliche Klopfen an der Tür entfällt, da es keine Tür gibt. \nIhr werft einen Blick ins Innere und euch gefriert das Blut in den Adern. \nAuf dem Boden um ein kleines Feuer sitzen große haarige Gestallten mit riesigen Hörnern und grotesk verzogenen Gesichtern. \nIhr nehmt die Beine in die Hand und rennt los, bloß weg von diesem Ort.",
         "courage_min": 19,
         "courage_max": 21,
         "next": "doors"
@@ -175,7 +187,7 @@
         "view": "door"
       },
       {
-        "text": "Ihr habt euch mutig für einen Spaziergang durch den Wald entschieden und habt jetzt schon länger keine Häuser - oder Lichter - gesehen. \nDer Weg wird immer schmaler. \nPlötzlich steht ihr in einer Lichtung. In der Mitte steht ein Fachwerkhaus, dessen Mäuer und Dach eine ungewöhnliche Textur haben. \nKönnte es... Pfefferkuchen sein?",
+        "text": "Ihr habt euch mutig für einen Spaziergang durch den Wald entschieden und habt jetzt schon länger keine Häuser - oder Lichter - gesehen. \nDer Weg wird immer schmaler. \nPlötzlich steht ihr in einer Lichtung. In der Mitte steht ein Fachwerkhaus, dessen Mauer und Dach eine ungewöhnliche Textur haben. \nKönnte es... Pfefferkuchen sein?",
         "view": "door"
       },
       {
@@ -188,6 +200,10 @@
       },
       {
         "text": "Ihr entscheidet euch, zum letzten Haus der Sackgasse zu gehen. \nDichte Hecken versperren die Sicht auf dem Haus, ihr geht also durch das halb offene Tor und wagt euch in dem Vorgarten.",
+        "view": "door"
+      },
+      {
+        "text": "Hinter einem hohen Holzzaun könnt ihr ein völlig überwuchertes Haus erkennen.",
         "view": "door"
       },
       {
