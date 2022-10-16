@@ -165,7 +165,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
                 ephemeral=True)
             return
 
-        if not self.can_play(player, interaction):
+        if not await self.can_play(player, interaction):
             return
 
         thread = await channel.create_thread(name=name, auto_archive_duration=1440, type=channel_type)
@@ -208,7 +208,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
                         "Thread vorbei.", ephemeral=True)
                     return
 
-                if not self.can_play(player, interaction):
+                if not await self.can_play(player, interaction):
                     return
 
                 thread = await self.bot.fetch_channel(value)
@@ -239,7 +239,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
         if interaction.user.id == owner_id:
             if group := self.groups.get(str(interaction.channel_id)):
                 if value:
-                    if not self.is_playing(player_id, interaction, send_message=False):
+                    if not await self.is_playing(player_id, interaction, send_message=False):
                         group["players"].append(player_id)
 
                         # Request-Nachrichten aus allen Threads und aus players löschen
@@ -364,14 +364,21 @@ class ElmStreet(commands.GroupCog, name="elm"):
         thread_id = interaction.channel_id
         player_id = interaction.user.id
         msg_player = interaction.message.mentions[0]
+        group = self.groups[str(thread_id)]
 
         if msg_player.id == player_id:
             self.leave_group(thread_id, player_id)
             await interaction.response.send_message(f"<@{player_id}> hat die Gruppe verlassen.")
             await interaction.message.edit(view=self.get_leave_view(disabled=True))
+        elif player_id == group["owner"]:
+            await interaction.response.send_message(
+                f"Nur {msg_player.mention} darf diesen Button bedienen. Abgesehen davon kannst du aber doch nicht "
+                f"einfach deine Gruppe im Stich lassen. Sie zählen auf dich! Solltest du aber wirklich nicht "
+                f"weiter spielen wollen, so entscheide dich mit deiner Gruppe zusammen dafür, "
+                f"euer Abenteuer zu beenden.", ephemeral=True)
         else:
             await interaction.response.send_message(
-                f"Nur <@{player_id}> darf diesen Button bedienen. Wenn du die Gruppe "
+                f"Nur {msg_player.mention} darf diesen Button bedienen. Wenn du die Gruppe "
                 f"verlassen willst, versuche es mit `/leave-group`", ephemeral=True)
 
     async def end_adventure(self, interaction: Interaction, thread_id: int, abort: bool = False):
@@ -445,8 +452,8 @@ class ElmStreet(commands.GroupCog, name="elm"):
         ]
         return self.bot.view_manager.view(buttons, "on_leave")
 
-    def can_play(self, player, interaction):
-        if self.is_playing(interaction.user.id, interaction):
+    async def can_play(self, player, interaction):
+        if await self.is_playing(interaction.user.id, interaction):
             return False
 
         if player["courage"] < MIN_COURAGE_JOIN:
@@ -459,7 +466,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
 
         return True
 
-    def is_playing(self, user_id: int, interaction: Interaction, send_message: bool = True):
+    async def is_playing(self, user_id: int, interaction: Interaction, send_message: bool = True):
         players = [player for player in [group["players"] for group in self.groups.values()]]
         if user_id in players:
             if send_message:
