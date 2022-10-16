@@ -426,7 +426,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
 
     def get_start_view(self, disabled=False):
         buttons = [
-            {"label": "Start", "style": ButtonStyle.green, "value": True, "custom_id": "elm_street:start",
+            {"label": "Los geht's", "style": ButtonStyle.green, "value": True, "custom_id": "elm_street:start",
              "disabled": disabled},
             {"label": "Abbrechen", "style": ButtonStyle.gray, "value": False, "custom_id": "elm_street:cancel",
              "disabled": disabled}
@@ -587,7 +587,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
             if sweets == 0:
                 text += f"\n\nIhr habt genau so viele Süßigkeiten wie vorher."
             if sweets < 0:
-                text += f"\n\nIhr verliert jeweils {sweets} Süßigkeiten."
+                text += f"\n\nIhr verliert jeweils {-sweets} Süßigkeiten."
             group_stats['sweets'] += sweets
         if courage:
             if courage > 0:
