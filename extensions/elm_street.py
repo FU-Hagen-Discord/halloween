@@ -555,159 +555,147 @@ class ElmStreet(commands.GroupCog, name="elm"):
 
         return message
 
+    async def get_group_stats_embed(self, thread_id):
+        thread = await self.bot.fetch_channel(thread_id)
+        players = self.groups.get(str(thread_id)).get('players')
+        stats = self.groups.get(str(thread_id)).get('stats')
 
-async def get_group_stats_embed(self, thread_id):
-    thread = await self.bot.fetch_channel(thread_id)
-    players = self.groups.get(str(thread_id)).get('players')
-    stats = self.groups.get(str(thread_id)).get('stats')
+        players_value = ', '.join([f'<@{int(player)}>' for player in players])
+        doors_value = stats.get('doors')
+        sweets_value = stats.get('sweets')
+        courage_value = stats.get('courage')
 
-    players_value = ', '.join([f'<@{int(player)}>' for player in players])
-    doors_value = stats.get('doors')
-    sweets_value = stats.get('sweets')
-    courage_value = stats.get('courage')
+        embed = discord.Embed(title=f'Erfolge der Gruppe "{thread.name}"')
+        embed.add_field(name='Mitspieler', value=players_value, inline=False)
+        embed.add_field(name="Besuchte Türen", value=doors_value)
+        embed.add_field(name="Gesammelte Süßigkeiten", value=sweets_value)
+        embed.add_field(name="Verlorene Mutpunkte", value=courage_value)
 
-    embed = discord.Embed(title=f'Erfolge der Gruppe "{thread.name}"')
-    embed.add_field(name='Mitspieler', value=players_value, inline=False)
-    embed.add_field(name="Besuchte Türen", value=doors_value)
-    embed.add_field(name="Gesammelte Süßigkeiten", value=sweets_value)
-    embed.add_field(name="Verlorene Mutpunkte", value=courage_value)
+        return embed
 
-    return embed
+    def get_personal_stats_embed(self, player_id):
+        player = self.players.get(str(player_id))
+        embed = discord.Embed(title="Deine persönlichen Erfolge")
+        embed.add_field(name="Süßigkeiten", value=player['sweets'])
+        embed.add_field(name="Mutpunkte", value=player['courage'])
+        return embed
 
+    def get_invite_message(self, author):
+        return SystemRandom().choice(self.story["invitations"]).format(author_mention=author.mention)
 
-def get_personal_stats_embed(self, player_id):
-    player = self.players.get(str(player_id))
-    embed = discord.Embed(title="Deine persönlichen Erfolge")
-    embed.add_field(name="Süßigkeiten", value=player['sweets'])
-    embed.add_field(name="Mutpunkte", value=player['courage'])
-    return embed
+    def get_group_by_voice_id(self, voice_id):
+        for group in self.groups.values():
+            if vc := group.get("voice_channel"):
+                if vc == voice_id:
+                    return group
 
+        return None
 
-def get_invite_message(self, author):
-    return SystemRandom().choice(self.story["invitations"]).format(author_mention=author.mention)
+    def apply_sweets_and_courage(self, text, sweets, courage, thread_id):
+        group = self.groups.get(str(thread_id))
+        player_ids = group.get("players")
+        group_stats = group.get('stats')
 
+        if sweets:
+            if sweets > 0:
+                text += f"\n\nIhr erhaltet jeweils {sweets} Süßigkeiten."
+            if sweets == 0:
+                text += f"\n\nIhr habt genau so viele Süßigkeiten wie vorher."
+            if sweets < 0:
+                text += f"\n\nIhr verliert jeweils {-sweets} Süßigkeiten."
+            group_stats['sweets'] += sweets
+        if courage:
+            if courage > 0:
+                text += f"\n\nIhr verliert jeweils {courage} Mutpunkte."
+            for player_id in player_ids:
+                player = self.players.get(str(player_id))
+                player["courage"] -= courage
+            group_stats['courage'] += courage
 
-def get_group_by_voice_id(self, voice_id):
-    for group in self.groups.values():
-        if vc := group.get("voice_channel"):
-            if vc == voice_id:
-                return group
+        self.save()
+        # TODO Was passiert wenn die courage eines Players zu weit sinkt?
+        return text
 
-    return None
-
-
-def apply_sweets_and_courage(self, text, sweets, courage, thread_id):
-    group = self.groups.get(str(thread_id))
-    player_ids = group.get("players")
-    group_stats = group.get('stats')
-
-    if sweets:
-        if sweets > 0:
-            text += f"\n\nIhr erhaltet jeweils {sweets} Süßigkeiten."
-        if sweets == 0:
-            text += f"\n\nIhr habt genau so viele Süßigkeiten wie vorher."
-        if sweets < 0:
-            text += f"\n\nIhr verliert jeweils {-sweets} Süßigkeiten."
-        group_stats['sweets'] += sweets
-    if courage:
-        if courage > 0:
-            text += f"\n\nIhr verliert jeweils {courage} Mutpunkte."
+    def share_sweets(self, sweets, thread_id):
+        group = self.groups.get(str(thread_id))
+        player_ids = group.get("players")
         for player_id in player_ids:
             player = self.players.get(str(player_id))
-            player["courage"] -= courage
-        group_stats['courage'] += courage
+            player["sweets"] += sweets
 
-    self.save()
-    # TODO Was passiert wenn die courage eines Players zu weit sinkt?
-    return text
-
-
-def share_sweets(self, sweets, thread_id):
-    group = self.groups.get(str(thread_id))
-    player_ids = group.get("players")
-    for player_id in player_ids:
+    def leave_group(self, thread_id, player_id):
+        group = self.groups.get(str(thread_id))
+        group_players = group.get('players')
         player = self.players.get(str(player_id))
-        player["sweets"] += sweets
 
+        # Spieler auszahlen
+        group_stats = group.get('stats')
+        player["sweets"] += group_stats['sweets']
 
-def leave_group(self, thread_id, player_id):
-    group = self.groups.get(str(thread_id))
-    group_players = group.get('players')
-    player = self.players.get(str(player_id))
+        # Spieler aus Gruppe löschen
+        group_players.remove(player_id)
+        self.save()
 
-    # Spieler auszahlen
-    group_stats = group.get('stats')
-    player["sweets"] += group_stats['sweets']
+    async def deny_join_request(self, group, message, player_id):
+        user = self.bot.get_user(player_id)
+        outfit = ["Piraten", "Einhörner", "Geister", "Katzen", "Weihnachtswichtel"]
+        dresscode = ["Werwölfe", "Vampire", "Alice im Wunderland", "Hexen", "Zombies"]
+        texts = [
+            "Wir wollen um die Häuser ziehen und Kinder erschrecken. Du schaust aus, als würdest du den "
+            "Kindern lieber unsere Süßigkeiten geben. Versuch es woanders.",
+            f"Ich glaub du hast dich verlaufen, in dieser Gruppe können wir keine "
+            f"{SystemRandom().choice(outfit)} gebrauchen. Unser Dresscode ist: {SystemRandom().choice(dresscode)}."]
+        await send_dm(user, SystemRandom().choice(texts))
+        group["requests"].remove({'player': player_id, 'id': message.id})
+        self.save()
+        # Request Nachricht aus diesem Thread und aus players löschen
+        self.delete_message_from_player(player_id, message.id)
+        await message.delete()
 
-    # Spieler aus Gruppe löschen
-    group_players.remove(player_id)
-    self.save()
+    async def deny_open_join_requests(self, thread_id, group):
+        thread = await self.bot.fetch_channel(thread_id)
 
+        if requests := group.get("requests"):
+            for request in requests:
+                message = await thread.fetch_message(request["id"])
+                await self.deny_join_request(group, message, request["player"])
 
-async def deny_join_request(self, group, message, player_id):
-    user = self.bot.get_user(player_id)
-    outfit = ["Piraten", "Einhörner", "Geister", "Katzen", "Weihnachtswichtel"]
-    dresscode = ["Werwölfe", "Vampire", "Alice im Wunderland", "Hexen", "Zombies"]
-    texts = [
-        "Wir wollen um die Häuser ziehen und Kinder erschrecken. Du schaust aus, als würdest du den "
-        "Kindern lieber unsere Süßigkeiten geben. Versuch es woanders.",
-        f"Ich glaub du hast dich verlaufen, in dieser Gruppe können wir keine "
-        f"{SystemRandom().choice(outfit)} gebrauchen. Unser Dresscode ist: {SystemRandom().choice(dresscode)}."]
-    await send_dm(user, SystemRandom().choice(texts))
-    group["requests"].remove({'player': player_id, 'id': message.id})
-    self.save()
-    # Request Nachricht aus diesem Thread und aus players löschen
-    self.delete_message_from_player(player_id, message.id)
-    await message.delete()
+    @tasks.loop(minutes=5)
+    async def increase_courage(self):
+        # Alle Spieler, die gerade in einer Runde sind auslesen
+        actual_playing = [player for player in [group["players"] for group in self.groups.values()]]
 
+        # pro Spieler: courage erhöhen
+        for player_id, player in self.players.items():
+            # nur wenn Spieler nicht gerade spielt
+            if int(player_id) not in actual_playing:
+                courage = player.get('courage')
+                if courage < MAX_COURAGE:
+                    player['courage'] = min(courage + INC_COURAGE_STEP, MAX_COURAGE)
+                    self.save()
 
-async def deny_open_join_requests(self, thread_id, group):
-    thread = await self.bot.fetch_channel(thread_id)
+                    # pro Nachricht: Nachricht erneuern
+                    if messages := player.get('messages'):
+                        for message in messages:
+                            channel = await self.bot.fetch_channel(message['channel'])
+                            msg = await channel.fetch_message(message['id'])
+                            embed = msg.embeds[0]
+                            embed.clear_fields()
+                            embed.add_field(name='aktuelle Mutpunkte', value=f"{player.get('courage')}")
+                            await msg.edit(embed=embed)
 
-    if requests := group.get("requests"):
-        for request in requests:
-            message = await thread.fetch_message(request["id"])
-            await self.deny_join_request(group, message, request["player"])
+    @increase_courage.before_loop
+    async def before_increase(self):
+        await sleep(10)
 
-
-@tasks.loop(minutes=5)
-async def increase_courage(self):
-    # Alle Spieler, die gerade in einer Runde sind auslesen
-    actual_playing = [player for player in [group["players"] for group in self.groups.values()]]
-
-    # pro Spieler: courage erhöhen
-    for player_id, player in self.players.items():
-        # nur wenn Spieler nicht gerade spielt
-        if int(player_id) not in actual_playing:
-            courage = player.get('courage')
-            if courage < MAX_COURAGE:
-                player['courage'] = min(courage + INC_COURAGE_STEP, MAX_COURAGE)
-                self.save()
-
-                # pro Nachricht: Nachricht erneuern
-                if messages := player.get('messages'):
-                    for message in messages:
-                        channel = await self.bot.fetch_channel(message['channel'])
-                        msg = await channel.fetch_message(message['id'])
-                        embed = msg.embeds[0]
-                        embed.clear_fields()
-                        embed.add_field(name='aktuelle Mutpunkte', value=f"{player.get('courage')}")
-                        await msg.edit(embed=embed)
-
-
-@increase_courage.before_loop
-async def before_increase(self):
-    await sleep(10)
-
-
-@commands.Cog.listener(name="on_voice_state_update")
-async def voice_state_changed(self, member, before, after):
-    if not after.channel:
-        voice_channel_left = before.channel
-        if len(voice_channel_left.members) == 0 and \
-                voice_channel_left.category_id == self.halloween_category_id and \
-                not self.get_group_by_voice_id(voice_channel_left.id):
-            await voice_channel_left.delete()
+    @commands.Cog.listener(name="on_voice_state_update")
+    async def voice_state_changed(self, member, before, after):
+        if not after.channel:
+            voice_channel_left = before.channel
+            if len(voice_channel_left.members) == 0 and \
+                    voice_channel_left.category_id == self.halloween_category_id and \
+                    not self.get_group_by_voice_id(voice_channel_left.id):
+                await voice_channel_left.delete()
 
 
 async def setup(bot: commands.Bot) -> None:
