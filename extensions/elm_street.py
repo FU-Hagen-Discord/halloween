@@ -2,13 +2,15 @@ import json
 import os
 from asyncio import sleep
 from copy import deepcopy
+from os.path import exists
 from random import SystemRandom
 from typing import Union
 
 import discord
-from discord import app_commands, Guild, Interaction, ButtonStyle
+from discord import app_commands, Guild, Interaction, ButtonStyle, File
 from discord.app_commands import Choice
 from discord.ext import commands, tasks
+from discord.utils import escape_markdown
 from dotenv import load_dotenv
 
 from utils import send_dm
@@ -349,7 +351,12 @@ class ElmStreet(commands.GroupCog, name="elm"):
                         sweets = calculate_sweets(choice)
                         courage = calculate_courage(choice)
                         text = self.apply_sweets_and_courage(text, sweets, courage, interaction.channel_id)
-                        await channel.send(f"```\n{text}\n```")
+                        if image := choice.get("image"):
+                            if exists(f"images/{image}"):
+                                file = File(f"images/{image}")
+                                await channel.send(f"```\n{text}\n```", file=file)
+                        else:
+                            await channel.send(f"```\n{text}\n```")
                         if view:
                             await channel.send("Was wollt ihr als nächstes tun?", view=view)
                         if next := choice.get("next"):
@@ -545,7 +552,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
 
         message += f"```"
 
-        return message
+        return escape_markdown(message)
 
     async def get_group_stats_embed(self, thread_id):
         thread = await self.bot.fetch_channel(thread_id)
