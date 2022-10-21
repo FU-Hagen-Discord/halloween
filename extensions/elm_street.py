@@ -546,13 +546,14 @@ class ElmStreet(commands.GroupCog, name="elm"):
                 if 0 < max_entries < place:
                     if ready:
                         break
-                message += f"{str(place).rjust(4)}. | {str(value).rjust(5)} | {member.display_name}#{member.discriminator}\n"
+                message += escape_markdown(f"{str(place).rjust(4)}. | {str(value).rjust(5)} | "
+                                           f"{member.display_name}#{member.discriminator}\n")
             except:
                 pass
 
         message += f"```"
 
-        return escape_markdown(message)
+        return message
 
     async def get_group_stats_embed(self, thread_id):
         thread = await self.bot.fetch_channel(thread_id)
