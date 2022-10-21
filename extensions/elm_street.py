@@ -10,6 +10,7 @@ import discord
 from discord import app_commands, Guild, Interaction, ButtonStyle, File
 from discord.app_commands import Choice
 from discord.ext import commands, tasks
+from discord.utils import escape_markdown
 from dotenv import load_dotenv
 
 from utils import send_dm
@@ -551,7 +552,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
 
         message += f"```"
 
-        return message
+        return escape_markdown(message)
 
     async def get_group_stats_embed(self, thread_id):
         thread = await self.bot.fetch_channel(thread_id)
