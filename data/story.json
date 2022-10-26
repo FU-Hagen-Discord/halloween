@@ -87,12 +87,14 @@
         "courage_min": 19,
         "courage_max": 21,
         "next": "doors"
+        "image": "wildeGestallten.jpg"
       },
       {
         "text": "Ihr seid an einer Felswand. \nPlötzlich seht ihr ein kleines Stück vor euch einen warmen Lichtschein aus der Wand kommen.\nJe näher ihr kommt desto lauter wird ein himmlischer Gesang.\nDer Gesang und das Licht scheinen direkt aus dem Fels zu kommen.\nAls ihr ganz nahe seid, seht ihr, dass ihr vor einer kleinen Kapelle steht, die direkt in den Fels geschlagen wurde.\nDas Innere der Kapelle ist leer.\nIm Weitergehen merkt ihr, dass eure Süßigkeiten Behälter schwerer geworden sind.\nWas auch immer für den Gesang verantwortlich war, geizig war es jedenfalls nicht.",
         "sweets_min": 20,
         "sweets_max": 25,
         "next": "doors"
+        "image": "Felskapelle.jpg"
       },
       {
         "text": "An der Straßenecke steht ein geschmückter Tisch mit mehreren Schüsseln voller Süßigkeiten. \nWeit und breit ist niemand zu sehen. \nAls ihr euch wieder auf dem Weg macht, bemerkt ihr ein Schild mit der Aufschrift \"Happy Halloween :)\"",
@@ -109,6 +111,7 @@
         "courage_min": 3,
         "courage_max": 7,
         "view": "door"
+        "image": "20220928_143119.jpg"
       },
       {
         "text": "Die Mauer, an der ihr lang geht hat überall lustige kleine Türmchen. Ihr erwartet also etwas ausgefallenes, wenigstens ein kleines Schloss. Als ihr am Tor ankommt seid ihr enttäuscht, ihr seht einen einfachen schnörkellosen Bungalow.",
@@ -145,10 +148,12 @@
       {
         "text": "Ihr steht vor einer grünen Holztür.",
         "view": "door"
+        "image": "20220928_151535.jpg"
       },
       {
         "text": "Da ist eine Holztür mit einem metalenem Türklopfer.",
         "view": "door"
+        "image": "20220928_154705.jpg"
       },
       {
         "text": "Ihr kommt euch vor wie Riesen, die Tür vor euch reicht euch nur bis zum Knie.",
@@ -169,6 +174,7 @@
       {
         "text": "Diese Tür sieht aus, als ob sie in einen Keller führt. Es geht ein paar Stufen runter und die Farbe der Tür blättert langsam ab. Die Lampe, die den Abgang beleuchtet, hat ihre besten Tage auch schon hinter sich. Gerade als ihr runter gehen wollt gibt sie endgültig den Geist auf und erlischt.",
         "view": "door"
+        "image": "20220928_152925.jpg"
       },
       {
         "text": "Na toll, ein Hochhaus. \nIn eurem Übermut drückt ihr einfach auf sämtliche Klingeln.\nAuf das erste zaghaft genuschelte \"Jaaa?\" brüllt ihr euer \"Süßes oder Saures!\" in die Gegensprechanlage.Ihr könnt euer Glück nicht fassen als tatsächlich der Türsummer ertönt.",
@@ -205,6 +211,7 @@
       {
         "text": "Hinter einem hohen Holzzaun könnt ihr ein völlig überwuchertes Haus erkennen.",
         "view": "door"
+        "image": "20220928_152812.jpg"
       },
       {
         "text": "Neben der Eingangstür des Hauses stehen drei Bienenstöcke. Trotz der frischen Temperaturen sind viele Bienen unterwegs. \nOb ihr gestochen werdet, wenn ihr näher kommt?",
