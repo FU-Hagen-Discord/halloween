@@ -86,14 +86,14 @@
         "text": "Ihr seht eine alte Scheune auf einem Feld stehen. \nZwischen den Balken leuchtet der unstete Schein eines offenen Feuers hindurch. \nNach dem Motto: \"Wer nicht wagt, der nicht gewinnt\", macht ihr euch auf den Weg. \nDas höfliche Klopfen an der Tür entfällt, da es keine Tür gibt. \nIhr werft einen Blick ins Innere und euch gefriert das Blut in den Adern. \nAuf dem Boden um ein kleines Feuer sitzen große haarige Gestallten mit riesigen Hörnern und grotesk verzogenen Gesichtern. \nIhr nehmt die Beine in die Hand und rennt los, bloß weg von diesem Ort.",
         "courage_min": 19,
         "courage_max": 21,
-        "next": "doors"
+        "next": "doors",
         "image": "wildeGestallten.jpg"
       },
       {
         "text": "Ihr seid an einer Felswand. \nPlötzlich seht ihr ein kleines Stück vor euch einen warmen Lichtschein aus der Wand kommen.\nJe näher ihr kommt desto lauter wird ein himmlischer Gesang.\nDer Gesang und das Licht scheinen direkt aus dem Fels zu kommen.\nAls ihr ganz nahe seid, seht ihr, dass ihr vor einer kleinen Kapelle steht, die direkt in den Fels geschlagen wurde.\nDas Innere der Kapelle ist leer.\nIm Weitergehen merkt ihr, dass eure Süßigkeiten Behälter schwerer geworden sind.\nWas auch immer für den Gesang verantwortlich war, geizig war es jedenfalls nicht.",
         "sweets_min": 20,
         "sweets_max": 25,
-        "next": "doors"
+        "next": "doors",
         "image": "Felskapelle.jpg"
       },
       {
@@ -110,7 +110,7 @@
         "text": "Durch die Glastür vor euch könnt ihr eine Bewegung erahnen. Plötzlich wird das Licht hinter der Tür eingeschaltet und in der Tür spiegelt sich ein lebensgroßes Skelet.",
         "courage_min": 3,
         "courage_max": 7,
-        "view": "door"
+        "view": "door",
         "image": "20220928_143119.jpg"
       },
       {
@@ -147,12 +147,12 @@
       },
       {
         "text": "Ihr steht vor einer grünen Holztür.",
-        "view": "door"
+        "view": "door",
         "image": "20220928_151535.jpg"
       },
       {
         "text": "Da ist eine Holztür mit einem metalenem Türklopfer.",
-        "view": "door"
+        "view": "door",
         "image": "20220928_154705.jpg"
       },
       {
@@ -173,7 +173,7 @@
       },
       {
         "text": "Diese Tür sieht aus, als ob sie in einen Keller führt. Es geht ein paar Stufen runter und die Farbe der Tür blättert langsam ab. Die Lampe, die den Abgang beleuchtet, hat ihre besten Tage auch schon hinter sich. Gerade als ihr runter gehen wollt gibt sie endgültig den Geist auf und erlischt.",
-        "view": "door"
+        "view": "door",
         "image": "20220928_152925.jpg"
       },
       {
@@ -210,7 +210,7 @@
       },
       {
         "text": "Hinter einem hohen Holzzaun könnt ihr ein völlig überwuchertes Haus erkennen.",
-        "view": "door"
+        "view": "door",
         "image": "20220928_152812.jpg"
       },
       {
