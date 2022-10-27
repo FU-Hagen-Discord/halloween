@@ -546,7 +546,7 @@ class ElmStreet(commands.GroupCog, name="elm"):
                     if ready:
                         break
                 message += f"{str(place).rjust(4)}. | {str(value).rjust(5)} | "
-                message += escape_markdown(f"{member.display_name}#{member.discriminator}\n")
+                message += f"{member.display_name}#{member.discriminator}\n"
             except:
                 pass
 
