@@ -389,7 +389,8 @@
         "text": "Auf euer Klopfen öffnet sich nicht etwa die Tür, sondern der obere Teil der Tür verändert sich. \nVoller Grauen seht ihr euch dem Gesicht eines jungen Mädchens gegenüber, welches aus dem Material der Tür geformt ist.\nAls es mit dunkler, erdiger Stimme fragt:\"Was ist euer Begehr?\" ist es um euch geschehen, ihr nehmt die Beine in die Hand und flüchtet.",
         "courage_min": 15,
         "courage_max": 20,
-        "view": "knock"
+        "view": "knock",
+        "image": "Midjourney-Tuergesicht.png"
       }
     ],
     "fear": [
