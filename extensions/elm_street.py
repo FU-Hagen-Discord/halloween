@@ -354,9 +354,8 @@ class ElmStreet(commands.GroupCog, name="elm"):
                         if image := choice.get("image"):
                             if exists(f"images/{image}"):
                                 file = File(f"images/{image}")
-                                await channel.send(f"```\n{text}\n```", file=file)
-                        else:
-                            await channel.send(f"```\n{text}\n```")
+                                await channel.send("", file=file)
+                        await channel.send(f"```\n{text}\n```")
                         if view:
                             await channel.send("Was wollt ihr als nächstes tun?", view=view)
                         if next := choice.get("next"):
