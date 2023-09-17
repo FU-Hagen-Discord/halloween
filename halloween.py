@@ -11,7 +11,6 @@ class HalloweenBot(commands.Bot):
     def __init__(self, *args, config: Dict, **kwargs):
         super().__init__(*args, **kwargs)
         self.config = config
-        self.is_prod = config["is_prod"]
         self.view_manager: ViewManager = ViewManager(self)
         self.persistent_views_added: bool = False
 
