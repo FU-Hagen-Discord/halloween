@@ -117,3 +117,4 @@ GitHub.sublime-settings
 .history
 /data/*.json
 !/data/story.json
+/config.json
