@@ -86,7 +86,7 @@ class ClickGame(commands.Cog):
             button.value -= 1
         elif value < 0:
             await interaction.response.send_message(
-                f"Oh nein! Du hast das Monster gestärkt. Es greift dich an und du bekommst {value} Punkte abgezogen.",
+                f"Oh nein! Du hast das Monster gestärkt. Es greift dich an und du bekommst {-value} Punkte abgezogen.",
                 ephemeral=True)
             button.value += 1
         else:
