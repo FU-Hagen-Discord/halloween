@@ -1,20 +1,12 @@
-import json
 import os
 import random
-from asyncio import sleep
-from copy import deepcopy
-from os.path import exists
-from random import SystemRandom
-from typing import Union, Dict
+from typing import Dict
 from datetime import datetime, timedelta
 
 import discord
-from discord import app_commands, Guild, Interaction, ButtonStyle, File, Message, Embed
+from discord import app_commands, Guild, Interaction, ButtonStyle, Message, Embed
 from discord.app_commands import Choice
 from discord.ext import commands, tasks
-from discord.utils import escape_markdown
-
-from utils import send_dm
 
 
 
