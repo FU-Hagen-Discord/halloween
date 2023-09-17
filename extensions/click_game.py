@@ -101,6 +101,9 @@ class ClickGame(commands.Cog):
             {"style": ButtonStyle.gray, "value": 5, "custom_id": "click_game:plus", "emoji": plus_emoji},
             {"style": ButtonStyle.gray, "value": -5, "custom_id": "click_game:minus", "emoji": minus_emoji}
         ]
+
+        random.shuffle(buttons)
+
         return self.bot.view_manager.view(buttons, "on_click")
 
     async def get_leaderboard(self, guild: Guild, max_entries: int = 10):
