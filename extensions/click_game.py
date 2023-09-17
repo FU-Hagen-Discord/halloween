@@ -13,11 +13,9 @@ from discord import app_commands, Guild, Interaction, ButtonStyle, File, Message
 from discord.app_commands import Choice
 from discord.ext import commands, tasks
 from discord.utils import escape_markdown
-from dotenv import load_dotenv
 
 from utils import send_dm
 
-load_dotenv()
 
 
 @app_commands.guild_only()
