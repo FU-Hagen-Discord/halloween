@@ -3,7 +3,7 @@ import uuid
 
 import discord
 
-from views.dialog_view import DialogView
+from deprecated.views.dialog_view import DialogView
 
 
 class ViewManager:

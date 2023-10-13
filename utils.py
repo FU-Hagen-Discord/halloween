@@ -6,7 +6,7 @@ from discord.ext.commands import Context
 from discord import ButtonStyle, Embed, User, Member
 from dotenv import load_dotenv
 
-from views.dialog_view import DialogView
+from deprecated.views.dialog_view import DialogView
 
 load_dotenv()
 DATE_TIME_FMT = os.getenv("DISCORD_DATE_TIME_FORMAT")
