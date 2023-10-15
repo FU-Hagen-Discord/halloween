@@ -86,17 +86,19 @@ class ClickGame(commands.Cog):
     @app_commands.command(name="leaderboard",
                           description="Zeigt das Leaderboard der Elm Street Sammlerinnen-Gemeinschaft an.")
     @app_commands.choices(show=[Choice(name='10', value=10), Choice(name='all', value=0)])
+    @app_commands.describe(show="Gib an, wie viele Einträge des Leaderboards du sehen möchtest.", public="Gib an, ob du das Leaderboard für dich persönlich, oder für alle anzeigen lassen möchtest.")
     @app_commands.guild_only()
-    async def cmd_leaderboard(self, interaction: Interaction, show: int = 10):
-        await interaction.response.defer(ephemeral=True)
+    async def cmd_leaderboard(self, interaction: Interaction, show: int = 10, public: bool = False):
+        await interaction.response.defer(ephemeral=not public)
         leaderboard = await self.get_leaderboard(interaction.guild, max_entries=show)
-        await interaction.followup.send(content=leaderboard, ephemeral=True)
+        await interaction.followup.send(content=leaderboard, ephemeral=not public)
 
     async def on_click(self, button: discord.ui.Button, interaction: Interaction, value=None):
         player = self.get_player(interaction.user.id)
 
         if player.get(str(interaction.message.id)):
-            await interaction.response.send_message("Du hast bereits mit diesem Monster interagiert. Versuche es beim nächsten noch mal.", ephemeral=True)
+            await interaction.response.send_message(
+                "Du hast bereits mit diesem Monster interagiert. Versuche es beim nächsten noch mal.", ephemeral=True)
             return
 
         player[str(interaction.message.id)] = value
@@ -138,9 +140,9 @@ class ClickGame(commands.Cog):
         player = {}
         self.players[str(user_id)] = player
         return player
+
     async def get_leaderboard(self, guild: Guild, max_entries: int = 10):
-        message = f"**__Elm-Street Leaderboard__**\n\n" \
-                  f"Wie süß bist du wirklich??\n" \
+        message = f"**__Leaderboard__**\n\n" \
                   f"{':jack_o_lantern: ' * 8}\n\n" \
                   f"```md\n" \
                   f"Rank. | Items | User\n" \
@@ -160,7 +162,8 @@ class ClickGame(commands.Cog):
                     if ready:
                         break
                 message += f"{str(place).rjust(4)}. | {str(score).rjust(5)} | "
-                message += f"{member.name}" + (f"#{member.discriminator}\n" if member.discriminator > 0 else "")
+                message += f"@{member.name}"
+                message += f"#{member.discriminator}\n" if member.discriminator != "0" else "\n"
             except:
                 pass
 
@@ -177,6 +180,7 @@ class ClickGame(commands.Cog):
             scores[player_id] = score
 
         return scores
+
 
 async def setup(bot: commands.Bot) -> None:
     await bot.add_cog(ClickGame(bot))
