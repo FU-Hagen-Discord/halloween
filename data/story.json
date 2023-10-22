@@ -79,6 +79,12 @@
         "next": "doors",
         "sweets_min": -15,
         "sweets_max": -8
+      },
+      {
+        "text": "Ihr habt plötzlich ein ungutes Bauchgefühl, und entscheidet euch lieber schnell weiterzugehen.",
+        "next": "doors",
+        "courage_min": 3,
+        "courage_max": 5
       }
     ],
     "doors": [
@@ -227,6 +233,18 @@
       },
       {
         "text": "Die nächste Tür die ihr anvisiert versteckt sich hinter einem hohen Schmiedeeisernen Tor mit spitzen Stacheln.",
+        "view": "door"
+      },
+      {
+        "text": "Eine alte, große Holztür, von der schon mindestens fünf verschiedene Farben abblättern. \nIm unteren Bereich ist ein etwa faustgroßes Loch zu sehen, und...sind das etwa Kratzer? \nIhr habt ein mulmiges Gefühl, bewegt euch aber immer noch in Richtung Tür. \nPlötzlich hört ihr ein leises Knurren, was von etwas hinter der Tür zu kommen scheint... ",
+        "View": "door"
+      },
+      {
+        "text": "Ihr steht vor einer riesigen und massiven, pechschwarzen Tür. Ihr meint, hinter der Tür einen leisen Gesang mehrerer Personen zu hören.",
+        "view": "door"
+      },
+      {
+        "text": "Lautes Gekicher vernehmt ihr, als ihr euch dieser teilweisen verglasten Tür nähert. Aus dem Augenwinkel seht ihr noch, wie sich eine Ecke eines Vorhang ein wenig bewegt.",
         "view": "door"
       }
     ],
