@@ -58,8 +58,9 @@ class ClickGame(commands.Cog):
     async def send_message(self, channel) -> None:
         img = self.get_random_image()
         plus_emoji, minus_emoji = self.get_random_emojis()
-        file = discord.File(f"images/{img}", filename=img)
-        embed = Embed(title="Vorsicht!", description=self.get_random_description(plus_emoji, minus_emoji))
+        file = discord.File(f"{self.config['img_dir']}/{img}", filename=img)
+        embed = Embed(title=self.config["messages"]["title"],
+                      description=self.get_random_description(plus_emoji, minus_emoji))
         embed.set_image(url=f"attachment://{img}")
         await channel.send(file=file, embed=embed, view=self.get_view(plus_emoji, minus_emoji))
 
@@ -67,26 +68,22 @@ class ClickGame(commands.Cog):
         self.msg_count = 0
 
     def get_random_image(self) -> str:
-        images = os.listdir("images/")
+        images = os.listdir(self.config["img_dir"])
         return random.choice(images)
 
     def get_random_emojis(self):
-        plus_emoji = random.choice(self.config["emojis"])
-        while True:
-            minus_emoji = random.choice(self.config["emojis"])
-            if plus_emoji != minus_emoji:
-                return plus_emoji, minus_emoji
+        random.shuffle(self.config["emojis"])
+        return self.config["emojis"][0], self.config["emojis"][1]
 
     def get_random_description(self, plus_emoji, minus_emoji):
-        texts = [
-            f"Oh nein, pass auf! Klicke auf {plus_emoji}, um das Monster in die Flucht zu schlagen! Klicke auf {minus_emoji} um das Monster zu stärken!",
-            f"Oh nein, pass auf! Klicke auf {minus_emoji} um das Monster zu stärken! Klicke auf {plus_emoji}, um das Monster in die Flucht zu schlagen!"]
-        return random.choice(texts)
+        texts = self.config["messages"]["descriptions"]
+        return random.choice(texts).format(plus_emoji=plus_emoji, minus_emoji=minus_emoji)
 
     @app_commands.command(name="leaderboard",
-                          description="Zeigt das Leaderboard der Elm Street Sammlerinnen-Gemeinschaft an.")
+                          description="Zeigt das Leaderboard an.")
     @app_commands.choices(show=[Choice(name='10', value=10), Choice(name='all', value=0)])
-    @app_commands.describe(show="Gib an, wie viele Einträge des Leaderboards du sehen möchtest.", public="Gib an, ob du das Leaderboard für dich persönlich, oder für alle anzeigen lassen möchtest.")
+    @app_commands.describe(show="Gib an, wie viele Einträge des Leaderboards du sehen möchtest.",
+                           public="Gib an, ob du das Leaderboard für dich persönlich, oder für alle anzeigen lassen möchtest.")
     @app_commands.guild_only()
     async def cmd_leaderboard(self, interaction: Interaction, show: int = 10, public: bool = False):
         await interaction.response.defer(ephemeral=not public)
@@ -98,23 +95,22 @@ class ClickGame(commands.Cog):
 
         if player.get(str(interaction.message.id)):
             await interaction.response.send_message(
-                "Du hast bereits mit diesem Monster interagiert. Versuche es beim nächsten noch mal.", ephemeral=True)
+                self.config["messages"]["duplicate"], ephemeral=True)
             return
 
         player[str(interaction.message.id)] = value
 
         if value > 0:
             await interaction.response.send_message(
-                f"Super! Du hast das Monster geschwächt und erhältst zur Belohnung {value} Punkte.", ephemeral=True)
+                self.config["messages"]["plus"].format(value=value), ephemeral=True)
             button.value -= 1
         elif value < 0:
             await interaction.response.send_message(
-                f"Oh nein! Du hast das Monster gestärkt. Es greift dich an und du bekommst {-value} Punkte abgezogen.",
+                self.config["messages"]["minus"].format(value=-value),
                 ephemeral=True)
             button.value += 1
         else:
-            interaction.response.send_message("Du warst zu spät. Glücklicherweise wurde das Monster bereits besiegt.",
-                                              ephemeral=True)
+            interaction.response.send_message(self.config["messages"]["too_late"], ephemeral=True)
 
         self.save()
 
@@ -143,7 +139,7 @@ class ClickGame(commands.Cog):
 
     async def get_leaderboard(self, guild: Guild, max_entries: int = 10):
         message = f"**__Leaderboard__**\n\n" \
-                  f"{':jack_o_lantern: ' * 8}\n\n" \
+                  f"{self.config['leaderboard_emoji'] * 8}\n\n" \
                   f"```md\n" \
                   f"Rank. | Items | User\n" \
                   f"==================================================\n"
