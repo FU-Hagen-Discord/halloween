@@ -1,13 +1,13 @@
 import json
 import os
 import random
-from typing import Dict
 from datetime import datetime, timedelta
+from typing import Dict
 
 import discord
 from discord import app_commands, Guild, Interaction, ButtonStyle, Message, Embed
 from discord.app_commands import Choice
-from discord.ext import commands, tasks
+from discord.ext import commands
 
 
 @app_commands.guild_only()
@@ -34,7 +34,7 @@ class ClickGame(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: Message):
-        if message.author == self.bot.user:
+        if self.config["leaderboard_only"] or message.author == self.bot.user:
             return
 
         if message.channel.id not in self.config["channels"]:
@@ -88,7 +88,16 @@ class ClickGame(commands.Cog):
     async def cmd_leaderboard(self, interaction: Interaction, show: int = 10, public: bool = False):
         await interaction.response.defer(ephemeral=not public)
         leaderboard = await self.get_leaderboard(interaction.guild, max_entries=show)
-        await interaction.followup.send(content=leaderboard, ephemeral=not public)
+
+        while len(leaderboard) > 0:
+            if len(leaderboard) > 1990:
+                idx = leaderboard.rfind("\n", 0, 1990)
+                part_msg = leaderboard[:idx] + "```"
+                await interaction.followup.send(content=part_msg, ephemeral=not public)
+                leaderboard = "```md\n" + leaderboard[idx + 1:]
+            else:
+                await interaction.followup.send(content=leaderboard, ephemeral=not public)
+                break
 
     async def on_click(self, button: discord.ui.Button, interaction: Interaction, value=None):
         player = self.get_player(interaction.user.id)
